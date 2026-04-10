@@ -4,644 +4,524 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ShopProfit · 电商定价盈利系统</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  /* ===== Theme Variables ===== */
-  :root {
-    --bg-primary: #f7f8fc;
-    --bg-card: #ffffff;
-    --bg-input: #f0f2f8;
-    --bg-hover: #eef0f8;
-    --border: #e4e7f0;
-    --border-strong: #d0d4e8;
-    --text-primary: #1a1d2e;
-    --text-secondary: #5a6080;
-    --text-dim: #9498b0;
-    --accent: #6366f1;
-    --accent-hover: #4f52d4;
-    --accent-light: rgba(99,102,241,0.1);
-    --accent-glow: rgba(99,102,241,0.2);
-    --success: #22c55e;
-    --success-light: rgba(34,197,94,0.1);
-    --danger: #ef4444;
-    --danger-light: rgba(239,68,68,0.1);
-    --warning: #f59e0b;
-    --warning-light: rgba(245,158,11,0.1);
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
-    --shadow-lg: 0 12px 32px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
-    --shadow-xl: 0 24px 48px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.06);
-    --radius: 16px;
-    --radius-sm: 10px;
-    --radius-xs: 6px;
-    --font-display: 'Outfit', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-    --transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
-  }
-
-  [data-theme="dark"] {
-    --bg-primary: #0d0f1a;
-    --bg-card: #161928;
-    --bg-input: #1e2235;
-    --bg-hover: #252840;
-    --border: #2a2e48;
-    --border-strong: #3a3f60;
-    --text-primary: #e8eaf6;
-    --text-secondary: #8b90b0;
-    --text-dim: #555878;
-    --accent: #818cf8;
-    --accent-hover: #a5b4fc;
-    --accent-light: rgba(129,140,248,0.12);
-    --accent-glow: rgba(129,140,248,0.25);
-    --success: #34d399;
-    --success-light: rgba(52,211,153,0.1);
-    --danger: #f87171;
-    --danger-light: rgba(248,113,113,0.1);
-    --warning: #fbbf24;
-    --warning-light: rgba(251,191,36,0.1);
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
-    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4);
-    --shadow-xl: 0 24px 48px rgba(0,0,0,0.5);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: var(--font-body);
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    min-height: 100vh;
-    transition: var(--transition);
-  }
-
-  /* ===== Header ===== */
-  header {
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border);
-    padding: 0 40px;
-    height: 68px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(20px);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-icon {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 16px;
-    color: white;
-    box-shadow: 0 4px 12px rgba(99,102,241,0.3);
-  }
-
-  .logo-text {
-    font-family: var(--font-display);
-    font-size: 18px; font-weight: 800;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-  }
-
-  .logo-text span { color: var(--accent); }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .toggle-btn {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 14px;
-    background: var(--bg-input);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: var(--font-body);
-    font-size: 13px; font-weight: 500;
-    color: var(--text-secondary);
-    transition: var(--transition);
-  }
-
-  .toggle-btn:hover { background: var(--bg-hover); border-color: var(--border-strong); }
-
-  .toggle-icon {
-    width: 32px; height: 18px;
-    background: var(--accent-light);
-    border-radius: 20px;
-    position: relative;
-    transition: var(--transition);
-    flex-shrink: 0;
-  }
-
-  .toggle-icon::after {
-    content: '';
-    position: absolute;
-    width: 12px; height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    top: 3px; left: 3px;
-    transition: var(--transition);
-  }
-
-  [data-theme="dark"] .toggle-icon { background: var(--accent); }
-  [data-theme="dark"] .toggle-icon::after { left: 17px; background: white; }
-
-  /* ===== Main ===== */
-  .main {
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 32px 40px;
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 24px;
-  }
-
-  /* ===== Card ===== */
-  .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: var(--transition);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .card:hover { box-shadow: var(--shadow-md); border-color: var(--border-strong); }
-
-  .card-header {
-    padding: 20px 24px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .card-icon {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  .card-icon.purple { background: var(--accent-light); color: var(--accent); }
-  .card-icon.green { background: var(--success-light); color: var(--success); }
-  .card-icon.orange { background: var(--warning-light); color: var(--warning); }
-  .card-icon.red { background: var(--danger-light); color: var(--danger); }
-
-  .card-title {
-    font-family: var(--font-display);
-    font-size: 14px; font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--text-primary);
-  }
-
-  .card-subtitle {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-top: 1px;
-  }
-
-  .card-body { padding: 24px; }
-
-  /* ===== Left Column ===== */
-  .left-col {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  /* Platform selector */
-  .platform-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .platform-btn {
-    padding: 10px 8px;
-    background: var(--bg-input);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    text-align: center;
-    font-family: var(--font-body);
-    font-size: 12px; font-weight: 600;
-    color: var(--text-secondary);
-    transition: var(--transition);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .platform-btn:hover { background: var(--bg-hover); border-color: var(--border-strong); }
-  .platform-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
-  .platform-btn .p-icon { font-size: 20px; line-height: 1; }
-
-  .platform-info {
-    background: var(--accent-light);
-    border: 1px solid rgba(99,102,241,0.2);
-    border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-  }
-
-  .platform-info-label { color: var(--text-dim); }
-  .platform-info-value {
-    font-family: var(--font-mono);
-    font-weight: 600;
-    color: var(--accent);
-  }
-
-  /* Form */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-
-  .form-grid.full { grid-template-columns: 1fr; }
-
-  .field { display: flex; flex-direction: column; gap: 6px; }
-
-  .field label {
-    font-size: 12px; font-weight: 600;
-    color: var(--text-secondary);
-    display: flex; align-items: center; gap: 4px;
-  }
-
-  .field label .req { color: var(--danger); }
-
-  .input-wrap {
-    position: relative;
-  }
-
-  .input-wrap .prefix,
-  .input-wrap .suffix {
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--text-dim);
-    pointer-events: none;
-  }
-
-  .input-wrap .prefix { left: 12px; }
-  .input-wrap .suffix { right: 12px; }
-
-  input[type="text"],
-  input[type="number"],
-  select {
-    width: 100%;
-    background: var(--bg-input);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 11px 14px;
-    font-family: var(--font-body);
-    font-size: 14px;
-    color: var(--text-primary);
-    outline: none;
-    transition: var(--transition);
-    -moz-appearance: textfield;
-  }
-
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-  input.has-prefix { padding-left: 28px; }
-  input.has-suffix { padding-right: 32px; }
-
-  input:focus, select:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-    background: var(--bg-card);
-  }
-
-  select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239498b0' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 36px;
-  }
-
-  /* ===== Right Column ===== */
-  .right-col {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  /* Result metrics */
-  .metrics-strip {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-  }
-
-  .metric-card {
-    background: var(--bg-card);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .metric-label {
-    font-size: 11px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--text-dim);
-  }
-
-  .metric-value {
-    font-family: var(--font-mono);
-    font-size: 26px; font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: -0.03em;
-    transition: color 0.3s;
-  }
-
-  .metric-value.green { color: var(--success); }
-  .metric-value.red { color: var(--danger); }
-  .metric-value.orange { color: var(--warning); }
-
-  .metric-sub {
-    font-size: 11px; color: var(--text-dim);
-  }
-
-  /* ROI section */
-  .roi-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .roi-item {
-    background: var(--bg-input);
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .roi-item-label {
-    font-size: 11px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--text-dim);
-  }
-
-  .roi-item-value {
-    font-family: var(--font-mono);
-    font-size: 18px; font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .roi-item-value.good { color: var(--success); }
-  .roi-item-value.bad { color: var(--danger); }
-
-  /* Break-even */
-  .break-even-card {
-    background: linear-gradient(135deg, var(--accent-light), var(--success-light));
-    border: 1px solid rgba(99,102,241,0.2);
-    border-radius: var(--radius);
-    padding: 24px;
-    text-align: center;
-  }
-
-  .break-even-title {
-    font-size: 12px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.1em;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-
-  .break-even-price {
-    font-family: var(--font-mono);
-    font-size: 42px; font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-  }
-
-  .break-even-sub {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-top: 6px;
-  }
-
-  /* Coupon section */
-  .coupon-scenario {
-    background: var(--bg-input);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-  }
-
-  .coupon-row {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    gap: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .coupon-row:last-child { border-bottom: none; }
-
-  .coupon-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-family: var(--font-mono);
-    font-size: 12px; font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .coupon-badge.none { background: var(--bg-hover); color: var(--text-dim); border: 1px solid var(--border); }
-  .coupon-badge.small { background: var(--warning-light); color: var(--warning); border: 1px solid rgba(245,158,11,0.3); }
-  .coupon-badge.medium { background: var(--danger-light); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
-  .coupon-badge.large { background: var(--danger-light); color: var(--danger); border: 1px solid rgba(239,68,68,0.4); font-size: 13px; font-weight: 700; }
-
-  .coupon-result {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .coupon-profit {
-    font-family: var(--font-mono);
-    font-size: 15px; font-weight: 600;
-  }
-
-  .coupon-profit.pos { color: var(--success); }
-  .coupon-profit.neg { color: var(--danger); }
-
-  .coupon-profit-rate {
-    font-size: 11px; color: var(--text-dim);
-    font-family: var(--font-mono);
-  }
-
-  /* Full width cards */
-  .full-width { grid-column: 1 / -1; }
-
-  /* Cost breakdown */
-  .cost-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .cost-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-  }
-
-  .cost-row:last-child { border-bottom: none; }
-
-  .cost-row .label {
-    color: var(--text-secondary);
-    display: flex; align-items: center; gap: 6px;
-  }
-
-  .cost-row .value {
-    font-family: var(--font-mono);
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .cost-row .value.highlight { color: var(--accent); }
-  .cost-row.total { border-top: 2px solid var(--border-strong); margin-top: 4px; padding-top: 14px; }
-  .cost-row.total .label { font-weight: 700; color: var(--text-primary); }
-  .cost-row.total .value { font-size: 16px; }
-  .cost-row.profit .value { color: var(--success); }
-  .cost-row.loss .value { color: var(--danger); }
-
-  .color-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
-  }
-
-  /* Calculate button */
-  .btn-calc {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: var(--font-display);
-    font-size: 15px; font-weight: 700;
-    color: white;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 4px 14px rgba(99,102,241,0.35);
-    letter-spacing: 0.02em;
-    margin-top: 8px;
-  }
-
-  .btn-calc:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(99,102,241,0.45);
-  }
-
-  .btn-calc:active { transform: translateY(0); }
-
-  /* Section divider */
-  .section-label {
-    font-size: 11px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.12em;
-    color: var(--text-dim);
-    margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* Divider */
-  .divider {
-    height: 1px;
-    background: var(--border);
-    margin: 8px 0;
-  }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-
-  .card { animation: fadeUp 0.4s ease both; }
-  .card:nth-child(2) { animation-delay: 0.06s; }
-  .card:nth-child(3) { animation-delay: 0.12s; }
-  .card:nth-child(4) { animation-delay: 0.18s; }
-
-  .animate-num {
-    animation: fadeUp 0.3s ease;
-  }
-
-  /* Lang badge */
-  .lang-badge {
-    padding: 4px 10px;
-    background: var(--accent-light);
-    border: 1px solid rgba(99,102,241,0.3);
-    border-radius: 20px;
-    font-size: 11px; font-weight: 700;
-    color: var(--accent);
-    font-family: var(--font-mono);
-    letter-spacing: 0.05em;
-  }
-
-  /* Responsive */
-  @media (max-width: 1100px) {
-    .main { grid-template-columns: 1fr; padding: 20px; }
-    .full-width { grid-column: 1; }
-  }
-
-  @media (max-width: 600px) {
-    .form-grid { grid-template-columns: 1fr; }
-    .metrics-strip { grid-template-columns: 1fr; }
-    .platform-grid { grid-template-columns: repeat(2, 1fr); }
-    .roi-grid { grid-template-columns: 1fr; }
-    header { padding: 0 16px; }
-  }
+:root {
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --input-bg: #ffffff;
+  --border: #e2e8f0;
+  --text: #1e293b;
+  --text2: #64748b;
+  --text3: #94a3b8;
+  --accent: #6366f1;
+  --accent-light: #eef2ff;
+  --green: #10b981;
+  --green-light: #d1fae5;
+  --red: #ef4444;
+  --red-light: #fee2e2;
+  --orange: #f59e0b;
+  --orange-light: #fef3c7;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-sm: 10px;
+}
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --input-bg: #0f172a;
+  --border: #334155;
+  --text: #f1f5f9;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --accent-light: #1e1b4b;
+  --green-light: #064e3b;
+  --red-light: #7f1d1d;
+  --orange-light: #78350f;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.4);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Header */
+header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+}
+.logo-icon {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 15px;
+}
+.logo span { color: var(--accent); }
+
+.header-btns { display: flex; gap: 8px; }
+.header-btn {
+  padding: 7px 14px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.header-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Main Layout */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Input Panel */
+.input-panel {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.panel-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.panel-header .icon { font-size: 18px; }
+.panel-body { padding: 20px 22px; }
+
+/* Platform Grid */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.platform-btn {
+  padding: 10px 4px;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text2);
+  transition: all 0.15s;
+}
+.platform-btn:hover { border-color: var(--accent); }
+.platform-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+.platform-btn .p-icon { font-size: 18px; display: block; margin-bottom: 2px; }
+
+.platform-fees {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.fee-chip {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  text-align: center;
+}
+.fee-chip .label { font-size: 10px; color: var(--text3); display: block; }
+.fee-chip .value { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent); }
+
+/* Form */
+.form-group { margin-bottom: 14px; }
+.form-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.form-label .required { color: var(--red); }
+
+.input-wrap { position: relative; }
+.input-wrap .prefix {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--text3);
+}
+.input-wrap .suffix {
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: var(--text3);
+}
+
+input[type="number"], input[type="text"] {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: all 0.15s;
+  -moz-appearance: textfield;
+}
+input.has-prefix { padding-left: 28px; }
+input.has-suffix { padding-right: 28px; }
+input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+select {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+select:focus { border-color: var(--accent); }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  margin: 18px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Result Panel */
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Hero Result */
+.hero-result {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.hero-item {
+  padding: 28px 24px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.hero-item:last-child { border-right: none; }
+.hero-item .label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+.hero-item .value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.hero-item .value.positive { color: var(--green); }
+.hero-item .value.negative { color: var(--red); }
+.hero-item .value.neutral { color: var(--text); }
+.hero-item .sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 6px;
+}
+.hero-item .suggestion {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+/* Card */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-header .icon { font-size: 16px; }
+.card-header .sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text3);
+  margin-left: auto;
+}
+.card-body { padding: 20px; }
+
+/* ROI */
+.roi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.roi-item {
+  background: var(--input-bg);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+.roi-item .label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+.roi-item .value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+.roi-item .value.good { color: var(--green); }
+.roi-item .value.bad { color: var(--red); }
+
+/* Break Even */
+.break-even {
+  background: linear-gradient(135deg, var(--accent-light), #f0fdf4);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 16px;
+}
+.break-even .title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.break-even .price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text);
+}
+.break-even .hint {
+  font-size: 12px;
+  color: var(--text2);
+  margin-top: 4px;
+}
+
+/* Cost List */
+.cost-list { display: flex; flex-direction: column; }
+.cost-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.cost-item:last-child { border-bottom: none; }
+.cost-item .name { color: var(--text2); display: flex; align-items: center; gap: 8px; }
+.cost-item .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cost-item .amount {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--text);
+}
+.cost-item.total {
+  border-top: 2px solid var(--border);
+  margin-top: 8px;
+  padding-top: 16px;
+  font-weight: 700;
+}
+.cost-item.total .name { color: var(--text); font-size: 14px; }
+.cost-item.total .amount { font-size: 16px; }
+.cost-item.profit .amount { color: var(--green); }
+.cost-item.loss .amount { color: var(--red); }
+
+/* Coupon */
+.coupon-list { display: flex; flex-direction: column; gap: 10px; }
+.coupon-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--input-bg);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.coupon-row .badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge.none { background: var(--border); color: var(--text3); }
+.badge.small { background: var(--orange-light); color: var(--orange); }
+.badge.large { background: var(--red-light); color: var(--red); }
+.coupon-row .info { flex: 1; }
+.coupon-row .profit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 600;
+}
+.coupon-row .profit.pos { color: var(--green); }
+.coupon-row .profit.neg { color: var(--red); }
+.coupon-row .margin { font-size: 11px; color: var(--text3); }
+
+/* Pricing Advisor */
+.advisor-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+.advisor-box input { font-family: 'JetBrains Mono', monospace; }
+.advisor-btn {
+  padding: 11px 20px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.advisor-btn:hover { background: #5558e3; }
+.advisor-result {
+  background: var(--accent-light);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 16px;
+  display: none;
+}
+.advisor-result.show { display: block; }
+.advisor-result .label { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+.advisor-result .price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Summary */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.summary-item {
+  background: var(--input-bg);
+  border-radius: 8px;
+  padding: 14px;
+}
+.summary-item .label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.summary-item .value { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 600; }
+
+/* Animation */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.hero-item, .card { animation: fadeIn 0.3s ease; }
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .main { grid-template-columns: 1fr; }
+  .hero-grid { grid-template-columns: repeat(3, 1fr); }
+  .roi-grid { grid-template-columns: repeat(2, 1fr); }
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .main { padding: 16px; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-item { border-right: none; border-bottom: 1px solid var(--border); padding: 20px; }
+  .hero-item:last-child { border-bottom: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .roi-grid { grid-template-columns: 1fr 1fr; }
+  .advisor-box { grid-template-columns: 1fr 1fr; }
+  .advisor-box .advisor-btn { grid-column: 1 / -1; }
+}
 </style>
 </head>
 <body>
@@ -649,401 +529,313 @@
 <header>
   <div class="logo">
     <div class="logo-icon">₿</div>
-    <div>
-      <div class="logo-text">Shop<span>Profit</span></div>
-    </div>
-    <span class="lang-badge" id="langBadge">中文</span>
+    Shop<span>Profit</span>
   </div>
-  <div class="header-right">
-    <button class="toggle-btn" onclick="toggleTheme()" title="切换主题">
-      <div class="toggle-icon"></div>
-      <span id="themeLabel">深色模式</span>
-    </button>
-    <button class="toggle-btn" onclick="toggleLang()" id="langBtn">
-      <span id="langText">EN</span>
-    </button>
+  <div class="header-btns">
+    <button class="header-btn" onclick="toggleTheme()" id="themeBtn">🌙 深色</button>
+    <button class="header-btn" onclick="toggleLang()" id="langBtn">EN</button>
   </div>
 </header>
 
 <div class="main">
-
-  <!-- ===== Left Column ===== -->
-  <div class="left-col">
-
-    <!-- Platform Selection -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon purple">🏪</div>
-        <div>
-          <div class="card-title" data-zh="选择销售平台" data-en="Select Platform">选择销售平台</div>
-          <div class="card-subtitle" data-zh="不同平台收取不同比例的服务费" data-en="Different commission rates per platform">不同平台收取不同比例的服务费</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="platform-grid">
-          <button class="platform-btn active" onclick="selectPlatform('taobao')" id="p-taobao">
-            <span class="p-icon">🛒</span>
-            <span>淘宝</span>
-          </button>
-          <button class="platform-btn" onclick="selectPlatform('tmall')" id="p-tmall">
-            <span class="p-icon">🏠</span>
-            <span>天猫</span>
-          </button>
-          <button class="platform-btn" onclick="selectPlatform('jd')" id="p-jd">
-            <span class="p-icon">📦</span>
-            <span>京东</span>
-          </button>
-          <button class="platform-btn" onclick="selectPlatform('douyin')" id="p-douyin">
-            <span class="p-icon">🎵</span>
-            <span>抖音</span>
-          </button>
-          <button class="platform-btn" onclick="selectPlatform('kuaishou')" id="p-kuaishou">
-            <span class="p-icon">📱</span>
-            <span>快手</span>
-          </button>
-          <button class="platform-btn" onclick="selectPlatform('pinduoduo')" id="p-pinduoduo">
-            <span class="p-icon">🍎</span>
-            <span>拼多多</span>
-          </button>
-          <button class="platform-btn" onclick="selectPlatform('xiaohongshu')" id="p-xiaohongshu">
-            <span class="p-icon">📕</span>
-            <span>小红书</span>
-          </button>
-          <button class="platform-btn" onclick="selectPlatform('weipinhui')" id="p-weipinhui">
-            <span class="p-icon">🏷️</span>
-            <span>唯品会</span>
-          </button>
-          <button class="platform-btn" onclick="selectPlatform('self')" id="p-self">
-            <span class="p-icon">🌐</span>
-            <span>自营/私域</span>
-          </button>
-        </div>
-        <div style="margin-top:12px; display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div class="platform-info">
-            <span class="platform-info-label" data-zh="平台抽成" data-en="Commission">平台抽成</span>
-            <span class="platform-info-value" id="feeRateDisplay">5%</span>
-          </div>
-          <div class="platform-info">
-            <span class="platform-info-label" data-zh="技术服务费" data-en="Tech Fee">技术服务费</span>
-            <span class="platform-info-value" id="techFeeDisplay">0.5%</span>
-          </div>
-        </div>
-        <div class="platform-info" style="margin-top:8px">
-          <span class="platform-info-label" data-zh="支付宝/微信支付费率" data-en="Payment Fee">支付费率</span>
-          <span class="platform-info-value">0.6%</span>
-        </div>
-      </div>
+  <!-- 左侧：输入面板 -->
+  <div class="input-panel">
+    <div class="panel-header">
+      <span class="icon">📝</span>
+      <span id="inputTitle">填写商品信息</span>
     </div>
+    <div class="panel-body">
+      
+      <!-- 平台选择 -->
+      <div class="section-title" id="platformTitle">选择销售平台</div>
+      <div class="platform-grid">
+        <button class="platform-btn active" onclick="selectPlatform('taobao')" id="p-taobao">
+          <span class="p-icon">🛒</span>淘宝
+        </button>
+        <button class="platform-btn" onclick="selectPlatform('tmall')" id="p-tmall">
+          <span class="p-icon">🏠</span>天猫
+        </button>
+        <button class="platform-btn" onclick="selectPlatform('jd')" id="p-jd">
+          <span class="p-icon">📦</span>京东
+        </button>
+        <button class="platform-btn" onclick="selectPlatform('douyin')" id="p-douyin">
+          <span class="p-icon">🎵</span>抖音
+        </button>
+        <button class="platform-btn" onclick="selectPlatform('kuaishou')" id="p-kuaishou">
+          <span class="p-icon">📱</span>快手
+        </button>
+        <button class="platform-btn" onclick="selectPlatform('pinduoduo')" id="p-pinduoduo">
+          <span class="p-icon">🍎</span>拼多多
+        </button>
+        <button class="platform-btn" onclick="selectPlatform('xiaohongshu')" id="p-xiaohongshu">
+          <span class="p-icon">📕</span>小红书
+        </button>
+        <button class="platform-btn" onclick="selectPlatform('weipinhui')" id="p-weipinhui">
+          <span class="p-icon">🏷️</span>唯品会
+        </button>
+        <button class="platform-btn" onclick="selectPlatform('self')" id="p-self">
+          <span class="p-icon">🌐</span>自营
+        </button>
+      </div>
+      <div class="platform-fees">
+        <div class="fee-chip">
+          <span class="label" id="feeLabel">平台抽成</span>
+          <span class="value" id="feeRateDisplay">5%</span>
+        </div>
+        <div class="fee-chip">
+          <span class="label" id="techLabel">技术服务费</span>
+          <span class="value" id="techFeeDisplay">0.5%</span>
+        </div>
+        <div class="fee-chip">
+          <span class="label" id="payLabel">支付费</span>
+          <span class="value">0.6%</span>
+        </div>
+      </div>
 
-    <!-- Product Info -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon green">📦</div>
-        <div>
-          <div class="card-title" data-zh="商品基本信息" data-en="Product Info">商品基本信息</div>
-          <div class="card-subtitle" data-zh="输入商品成本与定价" data-en="Enter cost and selling price">输入商品成本与定价</div>
+      <!-- 基本信息 -->
+      <div class="section-title" id="basicTitle">商品信息</div>
+      <div class="form-group">
+        <label class="form-label"><span class="required">*</span><span id="costLabel">商品成本价</span></label>
+        <div class="input-wrap">
+          <span class="prefix">¥</span>
+          <input type="number" id="unitCost" class="has-prefix" placeholder="25.00" min="0" step="0.01" oninput="calculate()">
         </div>
       </div>
-      <div class="card-body">
-        <div class="form-grid full" style="margin-bottom:14px">
-          <div class="field">
-            <label data-zh="商品名称" data-en="Product Name"><span class="req">*</span>商品名称</label>
-            <input type="text" id="productName" placeholder="如：2024秋季新款韩版卫衣" data-placeholder-zh="如：2024秋季新款韩版卫衣" data-placeholder-en="e.g. 2024 Fall Korean Hoodie">
+      <div class="form-group">
+        <label class="form-label"><span class="required">*</span><span id="priceLabel">商品售价</span></label>
+        <div class="input-wrap">
+          <span class="prefix">¥</span>
+          <input type="number" id="sellPrice" class="has-prefix" placeholder="99.00" min="0" step="0.01" oninput="calculate()">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="qtyLabel">销售数量</label>
+          <input type="number" id="quantity" placeholder="100" min="1" value="100" oninput="calculate()">
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="catLabel">商品类目</label>
+          <select id="category" onchange="calculate()">
+            <option value="clothing">服饰鞋包</option>
+            <option value="beauty">美妆护肤</option>
+            <option value="food">食品生鲜</option>
+            <option value="electronics">数码家电</option>
+            <option value="home">家居百货</option>
+            <option value="other">其他</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 运营成本 -->
+      <div class="section-title" id="costTitle">运营成本</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="adSpendLabel">推广费总计 (¥)</label>
+          <div class="input-wrap">
+            <span class="prefix">¥</span>
+            <input type="number" id="adSpend" class="has-prefix" placeholder="500" min="0" value="0" oninput="calculate()">
           </div>
         </div>
-        <div class="form-grid">
-          <div class="field">
-            <label data-zh="商品成本价" data-en="Unit Cost"><span class="req">*</span>商品成本价</label>
-            <div class="input-wrap">
-              <span class="prefix">¥</span>
-              <input type="number" id="unitCost" class="has-prefix" placeholder="25.00" min="0" step="0.01">
-            </div>
+        <div class="form-group">
+          <label class="form-label" id="convLabel">转化件数</label>
+          <input type="number" id="conversions" placeholder="10" min="1" value="10" oninput="calculate()">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="pkgLabel">包装费/件</label>
+          <div class="input-wrap">
+            <span class="prefix">¥</span>
+            <input type="number" id="packaging" class="has-prefix" placeholder="2" min="0" value="0" oninput="calculate()">
           </div>
-          <div class="field">
-            <label data-zh="商品售价" data-en="Selling Price"><span class="req">*</span>商品售价</label>
-            <div class="input-wrap">
-              <span class="prefix">¥</span>
-              <input type="number" id="sellPrice" class="has-prefix" placeholder="99.00" min="0" step="0.01">
-            </div>
-          </div>
-          <div class="field">
-            <label data-zh="销售数量" data-en="Quantity">销售数量</label>
-            <div class="input-wrap">
-              <input type="number" id="quantity" placeholder="100" min="1" step="1" value="100">
-            </div>
-          </div>
-          <div class="field">
-            <label data-zh="商品类目" data-en="Category">商品类目</label>
-            <select id="category">
-              <option value="clothing" data-zh="服饰鞋包" data-en="Apparel & Shoes">服饰鞋包</option>
-              <option value="beauty" data-zh="美妆护肤" data-en="Beauty & Skincare">美妆护肤</option>
-              <option value="food" data-zh="食品生鲜" data-en="Food & Fresh">食品生鲜</option>
-              <option value="electronics" data-zh="数码家电" data-en="Electronics">数码家电</option>
-              <option value="home" data-zh="家居百货" data-en="Home & Living">家居百货</option>
-              <option value="other" data-zh="其他类目" data-en="Other">其他类目</option>
-            </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="shipLabel">快递费/件</label>
+          <div class="input-wrap">
+            <span class="prefix">¥</span>
+            <input type="number" id="shipping" class="has-prefix" placeholder="5" min="0" value="0" oninput="calculate()">
           </div>
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="returnLabel">退货率 (%)</label>
+          <div class="input-wrap">
+            <input type="number" id="returnRate" placeholder="5" min="0" max="100" value="5" oninput="calculate()">
+            <span class="suffix">%</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="otherLabel">其他费用</label>
+          <div class="input-wrap">
+            <span class="prefix">¥</span>
+            <input type="number" id="otherFees" class="has-prefix" placeholder="0" min="0" value="0" oninput="calculate()">
+          </div>
+        </div>
+      </div>
+
+      <!-- 优惠券 -->
+      <div class="section-title" id="couponTitle">优惠券（选填）</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="storeCouponLabel">店铺券 (¥)</label>
+          <div class="input-wrap">
+            <span class="prefix">¥</span>
+            <input type="number" id="storeCoupon" class="has-prefix" placeholder="0" min="0" value="0" oninput="calculate()">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" id="platCouponLabel">平台券 (¥)</label>
+          <div class="input-wrap">
+            <span class="prefix">¥</span>
+            <input type="number" id="platformCoupon" class="has-prefix" placeholder="0" min="0" value="0" oninput="calculate()">
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <!-- Costs -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon orange">💰</div>
-        <div>
-          <div class="card-title" data-zh="运营成本" data-en="Operating Costs">运营成本</div>
-          <div class="card-subtitle" data-zh="推广费 + 其他费用" data-en="Ads spend + other expenses">推广费 + 其他费用</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="section-label" data-zh="推广投入" data-en="Advertising Spend">推广投入</div>
-        <div class="form-grid" style="margin-bottom:16px">
-          <div class="field">
-            <label data-zh="今日推广费" data-en="Daily Ad Spend">今日推广费 (¥)</label>
-            <div class="input-wrap">
-              <span class="prefix">¥</span>
-              <input type="number" id="adSpend" class="has-prefix" placeholder="500" min="0" step="1" value="0">
-            </div>
-          </div>
-          <div class="field">
-            <label data-zh="预计转化件数" data-en="Est. Conversions">预计转化件数</label>
-            <div class="input-wrap">
-              <input type="number" id="conversions" placeholder="10" min="0" step="1" value="10">
-            </div>
-          </div>
-        </div>
-
-        <div class="section-label" data-zh="其他成本" data-en="Other Costs">其他成本</div>
-        <div class="form-grid">
-          <div class="field">
-            <label data-zh="包装费/件" data-en="Packaging/Unit">包装费/件 (¥)</label>
-            <div class="input-wrap">
-              <span class="prefix">¥</span>
-              <input type="number" id="packaging" class="has-prefix" placeholder="2.00" min="0" step="0.1" value="0">
-            </div>
-          </div>
-          <div class="field">
-            <label data-zh="快递运费/件" data-en="Shipping/Unit">快递运费/件 (¥)</label>
-            <div class="input-wrap">
-              <span class="prefix">¥</span>
-              <input type="number" id="shipping" class="has-prefix" placeholder="5.00" min="0" step="0.1" value="0">
-            </div>
-          </div>
-          <div class="field">
-            <label data-zh="退货率估算" data-en="Return Rate">退货率 (%)</label>
-            <div class="input-wrap">
-              <input type="number" id="returnRate" placeholder="5" min="0" max="100" step="0.1" value="5">
-              <span class="suffix">%</span>
-            </div>
-          </div>
-          <div class="field">
-            <label data-zh="其他固定费用" data-en="Other Fixed Fee">其他费用 (¥)</label>
-            <div class="input-wrap">
-              <span class="prefix">¥</span>
-              <input type="number" id="otherFees" class="has-prefix" placeholder="0" min="0" step="1" value="0">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Coupon -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon red">🎫</div>
-        <div>
-          <div class="card-title" data-zh="优惠券场景" data-en="Coupon Scenarios">优惠券场景</div>
-          <div class="card-subtitle" data-zh="叠加优惠券后盈亏分析" data-en="Profit analysis with coupon stacking">叠加优惠券后盈亏分析</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="form-grid full" style="margin-bottom:16px">
-          <div class="field">
-            <label data-zh="店铺券" data-en="Store Coupon">店铺优惠券 (¥)</label>
-            <div class="input-wrap">
-              <span class="prefix">¥</span>
-              <input type="number" id="storeCoupon" class="has-prefix" placeholder="0" min="0" step="0.1" value="0">
-            </div>
-          </div>
-          <div class="field">
-            <label data-zh="平台券" data-en="Platform Coupon">平台优惠券 (¥)</label>
-            <div class="input-wrap">
-              <span class="prefix">¥</span>
-              <input type="number" id="platformCoupon" class="has-prefix" placeholder="0" min="0" step="0.1" value="0">
-            </div>
-          </div>
-        </div>
-
-        <div class="coupon-scenario" id="couponScenarios">
-          <!-- Filled by JS -->
-        </div>
-      </div>
-    </div>
-
-    <button class="btn-calc" onclick="calculate()">
-      ▶ <span data-zh="计算利润分析" data-en="Calculate Profit">计算利润分析</span>
-    </button>
-
   </div>
 
-  <!-- ===== Right Column ===== -->
-  <div class="right-col">
+  <!-- 右侧：结果面板 -->
+  <div class="result-panel">
 
-    <!-- Core Metrics -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon green">📊</div>
-        <div>
-          <div class="card-title" data-zh="核心利润指标" data-en="Key Profit Metrics">核心利润指标</div>
-          <div class="card-subtitle" data-zh="实时盈亏一览" data-en="Real-time P&L overview">实时盈亏一览</div>
+    <!-- 核心数据 -->
+    <div class="hero-result">
+      <div class="hero-grid">
+        <div class="hero-item">
+          <div class="label" id="netLabel">单件净利润</div>
+          <div class="value neutral" id="netProfitUnit">¥0.00</div>
+          <div class="sub" id="netSub">扣除所有成本后</div>
         </div>
-      </div>
-      <div class="card-body" style="padding:0">
-        <div class="metrics-strip">
-          <div class="metric-card">
-            <div class="metric-label" data-zh="单件净利润" data-en="Net Profit/Unit">单件净利润</div>
-            <div class="metric-value" id="netProfitUnit">¥0.00</div>
-            <div class="metric-sub" data-zh="扣除所有成本后" data-en="After all costs">扣除所有成本后</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label" data-zh="利润率" data-en="Profit Margin">利润率</div>
-            <div class="metric-value" id="profitMargin">0%</div>
-            <div class="metric-sub" data-zh="净利润÷售价" data-en="Net ÷ Price">净利润÷售价</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label" data-zh="总净利润" data-en="Total Net Profit">总净利润</div>
-            <div class="metric-value" id="totalProfit">¥0</div>
-            <div class="metric-sub" id="totalProfitQty" data-zh="× 100件" data-en="× 100 units">× 100件</div>
-          </div>
+        <div class="hero-item">
+          <div class="label" id="marginLabel">利润率</div>
+          <div class="value neutral" id="profitMargin">0%</div>
+          <div class="sub" id="marginSub">净利润 ÷ 售价</div>
+        </div>
+        <div class="hero-item">
+          <div class="label" id="totalLabel">总净利润</div>
+          <div class="value neutral" id="totalProfit">¥0</div>
+          <div class="sub" id="totalSub">× 100件</div>
         </div>
       </div>
     </div>
 
-    <!-- ROI -->
+    <!-- 推广ROI -->
     <div class="card">
       <div class="card-header">
-        <div class="card-icon purple">📈</div>
-        <div>
-          <div class="card-title" data-zh="推广 ROI 分析" data-en="Advertising ROI Analysis">推广 ROI 分析</div>
-          <div class="card-subtitle" data-zh="广告投入产出比" data-en="Ad spend ROI breakdown">广告投入产出比</div>
-        </div>
+        <span class="icon">📈</span>
+        <span id="roiTitle">推广 ROI 分析</span>
+        <span class="sub" id="roiSub">广告投入产出</span>
       </div>
       <div class="card-body">
         <div class="roi-grid">
           <div class="roi-item">
-            <div class="roi-item-label" data-zh="广告费/单" data-en="Ad Cost/Order">广告费/单 (¥)</div>
-            <div class="roi-item-value" id="adCostPerOrder">¥0.00</div>
+            <div class="label" id="adCostLabel">广告费/单</div>
+            <div class="value" id="adCostPerOrder">¥0</div>
           </div>
           <div class="roi-item">
-            <div class="roi-item-label" data-zh="投入产出比" data-en="ROI Ratio">投入产出比</div>
-            <div class="roi-item-value" id="roiRatio">—</div>
+            <div class="label" id="roiRatioLabel">投入产出比</div>
+            <div class="value" id="roiRatio">—</div>
           </div>
           <div class="roi-item">
-            <div class="roi-item-label" data-zh="GMV 总额" data-en="Total GMV">GMV 总额 (¥)</div>
-            <div class="roi-item-value" id="totalGMV">¥0</div>
+            <div class="label" id="gmvLabel">GMV</div>
+            <div class="value" id="totalGMV">¥0</div>
           </div>
           <div class="roi-item">
-            <div class="roi-item-label" data-zh="推广占总成本" data-en="Ad as % Cost">推广占总成本</div>
-            <div class="roi-item-value" id="adCostPercent">0%</div>
+            <div class="label" id="adPctLabel">推广占比</div>
+            <div class="value" id="adCostPercent">0%</div>
           </div>
         </div>
-
-        <div class="break-even-card" style="margin-top:16px">
-          <div class="break-even-title" data-zh="💡 保本售价" data-en="💡 Break-even Price">💡 保本售价</div>
-          <div class="break-even-price" id="breakEvenPrice">¥0.00</div>
-          <div class="break-even-sub" data-zh="定价高于此价格才赚钱（含所有成本）" data-en="Price above this to be profitable (all costs included)">定价高于此价格才赚钱（含所有成本）</div>
+        <div class="break-even">
+          <div class="title" id="beTitle">💡 保本售价</div>
+          <div class="price" id="breakEvenPrice">¥0.00</div>
+          <div class="hint" id="beHint">定价高于此价格才赚钱</div>
         </div>
       </div>
     </div>
 
-    <!-- Pricing Advisor -->
+    <!-- 成本明细 -->
     <div class="card">
       <div class="card-header">
-        <div class="card-icon purple">🎯</div>
-        <div>
-          <div class="card-title" data-zh="定价建议" data-en="Pricing Advisor">定价建议</div>
-          <div class="card-subtitle" data-zh="目标利润率反推建议售价" data-en="Suggested price based on target margin">目标利润率反推建议售价</div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">
-          <div class="field">
-            <label data-zh="成本价" data-en="Cost">成本价 ¥</label>
-            <div class="input-wrap">
-              <input type="number" id="advCost" class="has-prefix" style="padding-left:24px" placeholder="25">
-            </div>
-          </div>
-          <div class="field">
-            <label data-zh="目标利润率" data-en="Target Margin">目标利润率 %</label>
-            <div class="input-wrap">
-              <input type="number" id="advMargin" placeholder="30" min="1" max="500" step="1" value="30">
-              <span class="suffix">%</span>
-            </div>
-          </div>
-          <div class="field">
-            <label>&nbsp;</label>
-            <button onclick="calcAdvisedPrice()" style="padding:10px;background:var(--accent);border:none;border-radius:var(--radius-sm);color:white;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;width:100%">
-              <span data-zh="计算" data-en="Calculate">计算</span>
-            </button>
-          </div>
-        </div>
-        <div id="advisedResult" style="background:var(--bg-input);border-radius:var(--radius-sm);padding:16px;text-align:center">
-          <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px" data-zh="建议售价" data-en="Suggested Price">建议售价</div>
-          <div id="advisedPrice" style="font-family:var(--font-mono);font-size:32px;font-weight:700;color:var(--accent)">¥0.00</div>
-          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px" id="advisedMargin"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cost Breakdown -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon orange">🧾</div>
-        <div>
-          <div class="card-title" data-zh="成本明细表" data-en="Cost Breakdown">成本明细表</div>
-          <div class="card-subtitle" data-zh="每件商品所有成本构成" data-en="All cost components per unit">每件商品所有成本构成</div>
-        </div>
+        <span class="icon">🧾</span>
+        <span id="costListTitle">成本明细（每件）</span>
       </div>
       <div class="card-body">
         <div class="cost-list" id="costBreakdown">
-          <!-- Filled by JS -->
-          <div style="text-align:center;padding:20px;color:var(--text-dim);font-size:13px" data-zh="点击「计算利润分析」查看明细" data-en="Click 'Calculate' to see breakdown">点击「计算利润分析」查看明细</div>
+          <div class="cost-item">
+            <span class="name" id="costHint">输入信息后自动计算</span>
+            <span class="amount" style="color:var(--text3)">—</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Summary per unit -->
+    <!-- 优惠券分析 -->
     <div class="card">
       <div class="card-header">
-        <div class="card-icon green">📋</div>
-        <div>
-          <div class="card-title" data-zh="盈亏汇总" data-en="Profit & Loss Summary">盈亏汇总</div>
-          <div class="card-subtitle" id="summarySubtitle" data-zh="基于当前定价与数量" data-en="Based on current price & quantity">基于当前定价与数量</div>
+        <span class="icon">🎫</span>
+        <span id="couponAnaTitle">优惠券盈亏分析</span>
+      </div>
+      <div class="card-body">
+        <div class="coupon-list" id="couponScenarios">
+          <!-- JS 填充 -->
         </div>
       </div>
-      <div class="card-body" id="plSummary">
-        <div class="cost-list" id="plList">
-          <div class="cost-row">
-            <span class="label"><span class="color-dot" style="background:#6366f1"></span><span data-zh="商品收入" data-en="Revenue">商品收入</span></span>
-            <span class="value" id="plRevenue">¥0.00</span>
+    </div>
+
+    <!-- 定价建议 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">🎯</span>
+        <span id="advisorTitle">定价建议</span>
+        <span class="sub" id="advisorSub">按目标利润率反推售价</span>
+      </div>
+      <div class="card-body">
+        <div class="advisor-box">
+          <div>
+            <label class="form-label" id="advCostLabel">成本价 ¥</label>
+            <input type="number" id="advCost" placeholder="25" oninput="calcAdvisedPrice()">
           </div>
-          <div class="cost-row">
-            <span class="label"><span class="color-dot" style="background:#22c55e"></span><span data-zh="毛利润" data-en="Gross Profit">毛利润</span></span>
-            <span class="value" id="plGross">¥0.00</span>
+          <div>
+            <label class="form-label" id="advMarginLabel">目标利润率 %</label>
+            <div class="input-wrap">
+              <input type="number" id="advMargin" placeholder="30" value="30" min="1" max="100" oninput="calcAdvisedPrice()">
+              <span class="suffix">%</span>
+            </div>
           </div>
-          <div class="cost-row">
-            <span class="label"><span class="color-dot" style="background:#f59e0b"></span><span data-zh="平台总成本" data-en="Platform Costs">平台总成本</span></span>
-            <span class="value" id="plPlatform">¥0.00</span>
+          <button class="advisor-btn" onclick="calcAdvisedPrice()" id="advBtn">计算</button>
+        </div>
+        <div class="advisor-result" id="advisedResult">
+          <div class="label" id="advisedLabel">建议售价</div>
+          <div class="price" id="advisedPrice">¥0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 汇总 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">📊</span>
+        <span id="summaryTitle">盈亏汇总</span>
+        <span class="sub" id="summarySub">基于当前定价与数量</span>
+      </div>
+      <div class="card-body">
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="label" id="revLabel">商品收入</div>
+            <div class="value" id="plRevenue">¥0</div>
           </div>
-          <div class="cost-row">
-            <span class="label"><span class="color-dot" style="background:#ef4444"></span><span data-zh="推广分摊" data-en="Ad Allocation">推广分摊</span></span>
-            <span class="value" id="plAd">¥0.00</span>
+          <div class="summary-item">
+            <div class="label" id="grossLabel">毛利润</div>
+            <div class="value" id="plGross">¥0</div>
           </div>
-          <div class="divider"></div>
-          <div class="cost-row total" id="plNetRow">
-            <span class="label" data-zh="净利润" data-en="Net Profit">净利润</span>
-            <span class="value" id="plNet">¥0.00</span>
+          <div class="summary-item">
+            <div class="label" id="platCostLabel">平台成本</div>
+            <div class="value" id="plPlatform">¥0</div>
+          </div>
+          <div class="summary-item">
+            <div class="label" id="netTotalLabel">净利润</div>
+            <div class="value" id="plNet">¥0</div>
           </div>
         </div>
       </div>
@@ -1053,26 +845,24 @@
 </div>
 
 <script>
-// ===== State =====
+// 状态
 let currentPlatform = 'taobao';
 let currentLang = 'zh';
-let lastResult = null;
 
 const PLATFORMS = {
-  taobao:        { name: '淘宝',       fee: 0.05, techFee: 0.005, label: 'Taobao', icon: '🛒' },
-  tmall:         { name: '天猫',       fee: 0.06, techFee: 0.005, label: 'Tmall', icon: '🏠' },
-  jd:            { name: '京东',       fee: 0.08, techFee: 0.01,  label: 'JD', icon: '📦' },
-  douyin:        { name: '抖音',       fee: 0.05, techFee: 0.01,  label: 'Douyin', icon: '🎵' },
-  kuaishou:      { name: '快手',       fee: 0.05, techFee: 0.01,  label: 'Kuaishou', icon: '📱' },
-  pinduoduo:     { name: '拼多多',     fee: 0.006,techFee: 0.002, label: 'Pinduoduo', icon: '🍎' },
-  xiaohongshu:   { name: '小红书',    fee: 0.07, techFee: 0.01,  label: 'Xiaohongshu', icon: '📕' },
-  weipinhui:     { name: '唯品会',     fee: 0.08, techFee: 0.01,  label: 'Weipinhui', icon: '🏷️' },
-  self:          { name: '自营/私域',  fee: 0,    techFee: 0,     label: 'Self/Private', icon: '🌐' },
+  taobao:      { name: '淘宝',       fee: 0.05, techFee: 0.005 },
+  tmall:       { name: '天猫',       fee: 0.06, techFee: 0.005 },
+  jd:          { name: '京东',       fee: 0.08, techFee: 0.01  },
+  douyin:      { name: '抖音',       fee: 0.05, techFee: 0.01  },
+  kuaishou:    { name: '快手',       fee: 0.05, techFee: 0.01  },
+  pinduoduo:   { name: '拼多多',     fee: 0.006,techFee: 0.002 },
+  xiaohongshu: { name: '小红书',    fee: 0.07, techFee: 0.01  },
+  weipinhui:   { name: '唯品会',     fee: 0.08, techFee: 0.01  },
+  self:        { name: '自营/私域',  fee: 0,    techFee: 0     },
 };
+const PAYMENT_FEE = 0.006;
 
-const PAYMENT_FEE = 0.006; // 支付手续费
-
-// ===== Platform Selection =====
+// 平台选择
 function selectPlatform(key) {
   document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('p-' + key).classList.add('active');
@@ -1080,94 +870,179 @@ function selectPlatform(key) {
   const p = PLATFORMS[key];
   document.getElementById('feeRateDisplay').textContent = (p.fee * 100).toFixed(1) + '%';
   document.getElementById('techFeeDisplay').textContent = (p.techFee * 100).toFixed(1) + '%';
+  calculate();
 }
 
-// ===== Language Toggle =====
+// 语言切换
 function toggleLang() {
   currentLang = currentLang === 'zh' ? 'en' : 'zh';
-  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
-  document.getElementById('langText').textContent = currentLang === 'zh' ? 'EN' : '中';
-  document.getElementById('langBadge').textContent = currentLang === 'zh' ? '中文' : 'English';
-
-  document.querySelectorAll('[data-zh]').forEach(el => {
-    const text = el.getAttribute('data-' + currentLang);
-    if (el.tagName === 'INPUT') {
-      el.placeholder = el.getAttribute('data-placeholder-' + currentLang) || text;
-    } else {
-      el.textContent = text;
+  document.getElementById('langBtn').textContent = currentLang === 'zh' ? 'EN' : '中';
+  document.getElementById('themeBtn').textContent = currentLang === 'zh' ? '🌙 深色' : '🌙 Dark';
+  
+  const t = currentLang === 'zh' ? {
+    inputTitle: '填写商品信息',
+    platformTitle: '选择销售平台',
+    basicTitle: '商品信息',
+    costTitle: '运营成本',
+    couponTitle: '优惠券（选填）',
+    costLabel: '商品成本价',
+    priceLabel: '商品售价',
+    qtyLabel: '销售数量',
+    catLabel: '商品类目',
+    adSpendLabel: '推广费总计 (¥)',
+    convLabel: '转化件数',
+    pkgLabel: '包装费/件',
+    shipLabel: '快递费/件',
+    returnLabel: '退货率 (%)',
+    otherLabel: '其他费用',
+    storeCouponLabel: '店铺券 (¥)',
+    platCouponLabel: '平台券 (¥)',
+    netLabel: '单件净利润',
+    netSub: '扣除所有成本后',
+    marginLabel: '利润率',
+    marginSub: '净利润 ÷ 售价',
+    totalLabel: '总净利润',
+    totalSub: '件商品总计',
+    roiTitle: '推广 ROI 分析',
+    roiSub: '广告投入产出',
+    adCostLabel: '广告费/单',
+    roiRatioLabel: '投入产出比',
+    gmvLabel: 'GMV',
+    adPctLabel: '推广占比',
+    beTitle: '💡 保本售价',
+    beHint: '定价高于此价格才赚钱',
+    costListTitle: '成本明细（每件）',
+    costHint: '输入信息后自动计算',
+    couponAnaTitle: '优惠券盈亏分析',
+    advisorTitle: '定价建议',
+    advisorSub: '按目标利润率反推售价',
+    advCostLabel: '成本价 ¥',
+    advMarginLabel: '目标利润率 %',
+    advBtn: '计算',
+    advisedLabel: '建议售价',
+    summaryTitle: '盈亏汇总',
+    summarySub: '基于当前定价与数量',
+    revLabel: '商品收入',
+    grossLabel: '毛利润',
+    platCostLabel: '平台成本',
+    netTotalLabel: '净利润',
+    placeholder_cost: '25.00',
+    placeholder_price: '99.00',
+    feeLabel: '平台抽成',
+    techLabel: '技术服务费',
+    payLabel: '支付费',
+  } : {
+    inputTitle: 'Enter Product Info',
+    platformTitle: 'Select Platform',
+    basicTitle: 'Product Info',
+    costTitle: 'Operating Costs',
+    couponTitle: 'Coupons (Optional)',
+    costLabel: 'Unit Cost',
+    priceLabel: 'Selling Price',
+    qtyLabel: 'Quantity',
+    catLabel: 'Category',
+    adSpendLabel: 'Total Ad Spend (¥)',
+    convLabel: 'Conversions',
+    pkgLabel: 'Packaging/Unit',
+    shipLabel: 'Shipping/Unit',
+    returnLabel: 'Return Rate (%)',
+    otherLabel: 'Other Fees',
+    storeCouponLabel: 'Store Coupon (¥)',
+    platCouponLabel: 'Platform Coupon (¥)',
+    netLabel: 'Net Profit/Unit',
+    netSub: 'After all costs',
+    marginLabel: 'Profit Margin',
+    marginSub: 'Net ÷ Price',
+    totalLabel: 'Total Net Profit',
+    totalSub: '× units total',
+    roiTitle: 'Ad ROI Analysis',
+    roiSub: 'Ad spend ROI',
+    adCostLabel: 'Ad Cost/Order',
+    roiRatioLabel: 'ROI Ratio',
+    gmvLabel: 'GMV',
+    adPctLabel: 'Ad % of Cost',
+    beTitle: '💡 Break-even Price',
+    beHint: 'Price above to profit',
+    costListTitle: 'Cost Breakdown (per unit)',
+    costHint: 'Enter values to calculate',
+    couponAnaTitle: 'Coupon P&L Analysis',
+    advisorTitle: 'Pricing Advisor',
+    advisorSub: 'Suggest price by target margin',
+    advCostLabel: 'Cost ¥',
+    advMarginLabel: 'Target Margin %',
+    advBtn: 'Calculate',
+    advisedLabel: 'Suggested Price',
+    summaryTitle: 'P&L Summary',
+    summarySub: 'Based on price & quantity',
+    revLabel: 'Revenue',
+    grossLabel: 'Gross Profit',
+    platCostLabel: 'Platform Cost',
+    netTotalLabel: 'Net Profit',
+    placeholder_cost: '25.00',
+    placeholder_price: '99.00',
+    feeLabel: 'Commission',
+    techLabel: 'Tech Fee',
+    payLabel: 'Payment Fee',
+  };
+  
+  // 更新所有文本
+  Object.entries(t).forEach(([key, val]) => {
+    const el = document.getElementById(key);
+    if (el) el.textContent = val;
+  });
+  
+  // 更新输入框占位符
+  document.getElementById('unitCost').placeholder = t.placeholder_cost;
+  document.getElementById('sellPrice').placeholder = t.placeholder_price;
+  
+  // 更新平台名称
+  const keys = Object.keys(PLATFORMS);
+  keys.forEach(key => {
+    const btn = document.getElementById('p-' + key);
+    if (btn) {
+      const span = btn.querySelector('.p-icon');
+      const text = btn.lastChild;
+      text.textContent = PLATFORMS[key].name;
     }
   });
-
-  // Update platform names
-  document.querySelectorAll('.platform-btn span:last-child').forEach((el, i) => {
-    const keys = Object.keys(PLATFORMS);
-    if (keys[i]) el.textContent = PLATFORMS[keys[i]].name;
-  });
+  
+  // 更新类目选项
+  const cats = currentLang === 'zh' 
+    ? ['服饰鞋包', '美妆护肤', '食品生鲜', '数码家电', '家居百货', '其他']
+    : ['Apparel', 'Beauty', 'Food', 'Electronics', 'Home', 'Other'];
+  const sel = document.getElementById('category');
+  cats.forEach((cat, i) => sel.options[i].textContent = cat);
+  
+  // 重新计算
+  calculate();
 }
 
-// ===== Theme Toggle =====
+// 主题切换
 function toggleTheme() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  if (isDark) {
-    document.documentElement.removeAttribute('data-theme');
-    document.getElementById('themeLabel').textContent = currentLang === 'zh' ? '深色模式' : 'Dark Mode';
-  } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    document.getElementById('themeLabel').textContent = currentLang === 'zh' ? '浅色模式' : 'Light Mode';
-  }
+  document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark');
+  const btn = document.getElementById('themeBtn');
+  btn.textContent = isDark ? '🌙 深色' : '☀️ 浅色';
 }
 
-// ===== Format =====
+// 格式化
 function fmt(val, dec = 2) {
-  if (val === null || isNaN(val) || !isFinite(val)) return '—';
-  return '¥' + Math.abs(val).toFixed(dec);
+  if (val === null || isNaN(val) || !isFinite(val)) return '¥0.00';
+  const sign = val < 0 ? '-' : '';
+  return sign + '¥' + Math.abs(val).toFixed(dec);
 }
-
-function fmtNum(val, dec = 2) {
-  if (val === null || isNaN(val) || !isFinite(val)) return '—';
-  return Math.abs(val).toFixed(dec);
-}
-
 function fmtRate(val) {
-  if (isNaN(val) || !isFinite(val)) return '—';
+  if (isNaN(val) || !isFinite(val)) return '0%';
   return Math.abs(val).toFixed(1) + '%';
 }
-
-// ===== Coupon Scenarios =====
-function renderCouponScenarios() {
-  const storeCoupon = parseFloat(document.getElementById('storeCoupon').value) || 0;
-  const platformCoupon = parseFloat(document.getElementById('platformCoupon').value) || 0;
-  const totalCoupon = storeCoupon + platformCoupon;
-
-  const scenarios = [
-    { store: 0, platform: 0, label_zh: '无优惠券', label_en: 'No Coupon', cls: 'none' },
-    { store: totalCoupon, platform: 0, label_zh: '仅店铺券', label_en: 'Store Only', cls: 'small' },
-    { store: 0, platform: totalCoupon, label_zh: '仅平台券', label_en: 'Platform Only', cls: 'small' },
-    { store: totalCoupon, platform: totalCoupon, label_zh: '双券叠加', label_en: 'Both Coupons', cls: totalCoupon > 50 ? 'large' : 'medium' },
-  ];
-
-  const container = document.getElementById('couponScenarios');
-  const labels = { none: currentLang === 'zh' ? '无优惠' : 'None', small: currentLang === 'zh' ? '小额' : 'Small', medium: currentLang === 'zh' ? '中额' : 'Medium', large: currentLang === 'zh' ? '大额' : 'Large' };
-
-  container.innerHTML = scenarios.map(s => `
-    <div class="coupon-row">
-      <span class="coupon-badge ${s.cls}">${labels[s.cls]}</span>
-      <div class="coupon-result">
-        <div class="coupon-profit" id="cp-${s.cls}" data-zh="¥0.00" data-en="$0.00">¥0.00</div>
-        <div class="coupon-profit-rate" id="cp-rate-${s.cls}">${currentLang === 'zh' ? '利润率 0%' : 'Margin 0%'}</div>
-      </div>
-    </div>
-  `).join('');
+function fmtClass(val) {
+  if (val > 0) return 'positive';
+  if (val < 0) return 'negative';
+  return 'neutral';
 }
 
-// Listen to coupon changes
-['storeCoupon', 'platformCoupon'].forEach(id => {
-  document.getElementById(id).addEventListener('input', renderCouponScenarios);
-});
-
-// ===== Core Calculation =====
+// 核心计算
 function calculate() {
-  const name = document.getElementById('productName').value.trim() || (currentLang === 'zh' ? '未命名商品' : 'Unnamed Product');
   const unitCost = parseFloat(document.getElementById('unitCost').value) || 0;
   const sellPrice = parseFloat(document.getElementById('sellPrice').value) || 0;
   const qty = parseInt(document.getElementById('quantity').value) || 1;
@@ -1179,215 +1054,198 @@ function calculate() {
   const otherFees = parseFloat(document.getElementById('otherFees').value) || 0;
   const storeCoupon = parseFloat(document.getElementById('storeCoupon').value) || 0;
   const platformCoupon = parseFloat(document.getElementById('platformCoupon').value) || 0;
-
+  
   if (unitCost <= 0 || sellPrice <= 0) {
-    shakeCalcBtn();
+    // 显示默认值
+    document.getElementById('netProfitUnit').textContent = '¥0.00';
+    document.getElementById('netProfitUnit').className = 'value neutral';
+    document.getElementById('profitMargin').textContent = '0%';
+    document.getElementById('profitMargin').className = 'value neutral';
+    document.getElementById('totalProfit').textContent = '¥0';
+    document.getElementById('totalProfit').className = 'value neutral';
     return;
   }
-
+  
   const platform = PLATFORMS[currentPlatform];
   const totalCoupon = storeCoupon + platformCoupon;
-
-  // Revenue after coupons (for one unit)
   const effectivePrice = Math.max(0, sellPrice - totalCoupon);
-
-  // Platform costs (calculated on original sell price, merchant absorbs coupon)
+  
+  // 平台费用
   const platformFee = effectivePrice * platform.fee;
   const techFee = effectivePrice * platform.techFee;
   const paymentFee = effectivePrice * PAYMENT_FEE;
-
-  // Other unit costs
+  
+  // 单位成本
   const unitAdCost = conversions > 0 ? adSpend / conversions : 0;
-  const totalUnitCost = unitCost + packaging + shipping + unitAdCost + (otherFees / qty);
-
-  // Net per unit (before returns)
+  const unitOther = otherFees / qty;
+  const totalUnitCost = unitCost + packaging + shipping + unitAdCost + unitOther;
+  
+  // 净利润（单件）
   const netPerUnit = effectivePrice - platformFee - techFee - paymentFee - totalUnitCost;
-
-  // With return rate: each return loses the unit cost + shipping + platform fees already paid
+  
+  // 退货损失
   const returnedUnits = Math.floor(qty * returnRate / 100);
   const returnLoss = returnedUnits * (unitCost + shipping + platformFee + techFee + paymentFee);
-
+  
+  // 总净利润
   const totalNet = netPerUnit * qty - returnLoss;
-
   const profitMargin = effectivePrice > 0 ? (netPerUnit / effectivePrice) * 100 : 0;
-  const adCostPerOrder = unitAdCost;
-  const roi = adCostPerOrder > 0 ? (netPerUnit / adCostPerOrder) : 0;
-  const totalGMV = effectivePrice * qty;
-  const totalCost = totalUnitCost * qty + adSpend + returnLoss + (platformFee + techFee + paymentFee) * qty;
-  const adCostPercent = totalGMV > 0 ? (adSpend / totalGMV) * 100 : 0;
-
-  // Break-even: price needed to cover all unit costs + platform fees + ad cost
-  // sellPrice - platformFee - techFee - paymentFee - unitCost - packaging - shipping - unitAdCost = 0
-  // sellPrice * (1 - platform.fee - platform.techFee - PAYMENT_FEE) = unitCost + packaging + shipping + unitAdCost
-  const beDivisor = 1 - platform.fee - platform.techFee - PAYMENT_FEE;
-  const breakEvenPrice = beDivisor > 0 ? (totalUnitCost) / beDivisor : unitCost * 10;
-
-  lastResult = { name, unitCost, sellPrice, qty, effectivePrice, netPerUnit, totalNet, profitMargin, breakEvenPrice, platform, totalGMV, totalCost, returnRate, returnedUnits };
-
-  // Update metrics
-  updateMetric('netProfitUnit', netPerUnit, netPerUnit);
-  updateMetric('profitMargin', profitMargin, profitMargin, '%', 1);
-  updateMetric('totalProfit', totalNet, totalNet);
-  document.getElementById('totalProfitQty').textContent = (currentLang === 'zh' ? '× ' : '× ') + qty + (currentLang === 'zh' ? '件' : ' units');
-
+  
   // ROI
-  document.getElementById('adCostPerOrder').textContent = fmt(adCostPerOrder);
-  document.getElementById('adCostPerOrder').className = 'roi-item-value' + (adCostPerOrder > Math.abs(netPerUnit) ? ' bad' : '');
-
-  const roiDisplay = roi >= 0 ? `${roi.toFixed(2)}x` : '—';
-  document.getElementById('roiRatio').textContent = roiDisplay;
-  document.getElementById('roiRatio').className = 'roi-item-value' + (roi >= 1 ? ' good' : roi > 0 ? '' : ' bad');
-
+  const roi = unitAdCost > 0 ? (netPerUnit / unitAdCost) : 0;
+  const totalGMV = effectivePrice * qty;
+  const adCostPercent = totalGMV > 0 ? (adSpend / totalGMV) * 100 : 0;
+  
+  // 保本售价
+  const divisor = 1 - platform.fee - platform.techFee - PAYMENT_FEE;
+  const breakEvenPrice = divisor > 0 ? totalUnitCost / divisor : 0;
+  
+  // === 更新显示 ===
+  
+  // 核心指标
+  const netEl = document.getElementById('netProfitUnit');
+  netEl.textContent = fmt(netPerUnit);
+  netEl.className = 'value ' + fmtClass(netPerUnit);
+  
+  const marginEl = document.getElementById('profitMargin');
+  marginEl.textContent = fmtRate(profitMargin);
+  marginEl.className = 'value ' + fmtClass(profitMargin);
+  
+  const totalEl = document.getElementById('totalProfit');
+  totalEl.textContent = fmt(totalNet, 0);
+  totalEl.className = 'value ' + fmtClass(totalNet);
+  document.getElementById('totalSub').textContent = (currentLang === 'zh' ? '× ' : '× ') + qty + (currentLang === 'zh' ? '件' : ' units');
+  
+  // ROI
+  document.getElementById('adCostPerOrder').textContent = fmt(unitAdCost);
+  document.getElementById('adCostPerOrder').className = 'value' + (unitAdCost > Math.abs(netPerUnit) ? ' bad' : '');
+  
+  const roiEl = document.getElementById('roiRatio');
+  roiEl.textContent = unitAdCost > 0 ? roi.toFixed(2) + 'x' : '—';
+  roiEl.className = 'value' + (roi >= 1 ? ' good' : roi > 0 ? '' : ' bad');
+  
   document.getElementById('totalGMV').textContent = fmt(totalGMV, 0);
   document.getElementById('adCostPercent').textContent = fmtRate(adCostPercent);
-
-  // Break-even
+  
+  // 保本
   document.getElementById('breakEvenPrice').textContent = fmt(breakEvenPrice);
-
-  // Cost breakdown
-  renderCostBreakdown(platform, effectivePrice, totalUnitCost, platformFee, techFee, paymentFee, unitAdCost, returnLoss, qty);
-
-  // P&L Summary
-  renderPLSummary(effectivePrice, netPerUnit, platformFee + techFee + paymentFee, unitAdCost, totalNet, qty);
-
-  // Coupon scenarios
-  renderCouponWithScenarios(storeCoupon, platformCoupon, unitCost, packaging, shipping, platform, adCostPerOrder, qty, returnRate);
+  
+  // 成本明细
+  renderCostBreakdown(platform, totalUnitCost, platformFee, techFee, paymentFee, unitAdCost, returnLoss / qty, unitCost, packaging, shipping, effectivePrice, netPerUnit);
+  
+  // 优惠券场景
+  renderCouponScenarios(unitCost, packaging, shipping, platform, unitAdCost, qty, returnRate);
+  
+  // 汇总
+  const grossProfit = sellPrice - unitCost;
+  const totalPlatform = (platformFee + techFee + paymentFee) * qty;
+  const totalAd = unitAdCost * qty;
+  
+  document.getElementById('plRevenue').textContent = fmt(effectivePrice * qty, 0);
+  document.getElementById('plGross').textContent = fmt(grossProfit * qty, 0);
+  document.getElementById('plGross').className = 'value' + (grossProfit > 0 ? '' : ' bad');
+  document.getElementById('plPlatform').textContent = fmt(totalPlatform, 0);
+  document.getElementById('plNet').textContent = fmt(totalNet, 0);
+  document.getElementById('plNet').className = 'value' + (totalNet >= 0 ? '' : ' bad');
 }
 
-function updateMetric(id, value, rawValue, suffix = '', dec = 2) {
-  const el = document.getElementById(id);
-  const cls = rawValue >= 0 ? (rawValue > 0 ? 'green' : '') : 'red';
-  el.textContent = suffix === '%' ? fmtRate(value) : fmt(value, dec);
-  el.className = 'metric-value ' + cls;
-  el.classList.add('animate-num');
-  setTimeout(() => el.classList.remove('animate-num'), 300);
-}
-
-function renderCostBreakdown(platform, effectivePrice, totalUnitCost, platformFee, techFee, paymentFee, unitAdCost, returnLoss, qty) {
+function renderCostBreakdown(platform, totalUnitCost, platformFee, techFee, paymentFee, unitAdCost, returnLoss, unitCost, packaging, shipping, effectivePrice, netPerUnit) {
   const rows = [
-    { label: currentLang === 'zh' ? '商品成本' : 'Product Cost', value: totalUnitCost - packaging - shipping - unitAdCost - (parseFloat(document.getElementById('otherFees').value) || 0) / qty, color: '#6366f1', sub: fmt(parseFloat(document.getElementById('unitCost').value || 0)) },
-    { label: currentLang === 'zh' ? '包装费' : 'Packaging', value: parseFloat(document.getElementById('packaging').value || 0), color: '#8b5cf6', sub: fmt(parseFloat(document.getElementById('packaging').value || 0)) + ' × ' + qty },
-    { label: currentLang === 'zh' ? '快递运费' : 'Shipping', value: parseFloat(document.getElementById('shipping').value || 0), color: '#a855f7', sub: fmt(parseFloat(document.getElementById('shipping').value || 0)) + ' × ' + qty },
-    { label: `${currentLang === 'zh' ? '平台抽成' : 'Platform Fee'} (${(platform.fee*100).toFixed(1)}%)`, value: platformFee, color: '#f59e0b' },
-    { label: `${currentLang === 'zh' ? '技术服务费' : 'Tech Fee'} (${(platform.techFee*100).toFixed(1)}%)`, value: techFee, color: '#f97316' },
-    { label: `${currentLang === 'zh' ? '支付手续费' : 'Payment Fee'} (0.6%)`, value: paymentFee, color: '#fb923c' },
-    { label: currentLang === 'zh' ? '推广分摊/件' : 'Ad Cost/Unit', value: unitAdCost, color: '#ef4444' },
-    { label: currentLang === 'zh' ? '退货损失（总计）' : 'Return Loss (Total)', value: returnLoss / qty, color: '#dc2626', sub: fmt(returnLoss) },
+    { name: currentLang === 'zh' ? '商品成本' : 'Product Cost', value: unitCost, color: '#6366f1' },
+    { name: currentLang === 'zh' ? '包装费' : 'Packaging', value: packaging, color: '#8b5cf6' },
+    { name: currentLang === 'zh' ? '快递费' : 'Shipping', value: shipping, color: '#a855f7' },
+    { name: `${currentLang === 'zh' ? '平台抽成' : 'Commission'} (${(platform.fee*100).toFixed(1)}%)`, value: platformFee, color: '#f59e0b' },
+    { name: `${currentLang === 'zh' ? '技术服务费' : 'Tech Fee'} (${(platform.techFee*100).toFixed(1)}%)`, value: techFee, color: '#f97316' },
+    { name: `${currentLang === 'zh' ? '支付费' : 'Payment'} (0.6%)`, value: paymentFee, color: '#fb923c' },
+    { name: currentLang === 'zh' ? '推广分摊' : 'Ad Cost', value: unitAdCost, color: '#ef4444' },
+    { name: currentLang === 'zh' ? '退货损失' : 'Return Loss', value: returnLoss, color: '#dc2626' },
   ];
-
-  const totalCostPerUnit = rows.reduce((s, r) => s + r.value, 0);
-  const netProfit = effectivePrice - totalCostPerUnit;
-  const profitClass = netProfit >= 0 ? 'profit' : 'loss';
-
-  document.getElementById('costBreakdown').innerHTML = rows.map(r => `
-    <div class="cost-row">
-      <span class="label"><span class="color-dot" style="background:${r.color}"></span>${r.label}</span>
-      <span class="value">${fmt(r.value)} ${r.sub ? `<span style="font-size:11px;color:var(--text-dim);margin-left:4px">${r.sub}</span>` : ''}</span>
+  
+  const html = rows.map(r => `
+    <div class="cost-item">
+      <span class="name"><span class="dot" style="background:${r.color}"></span>${r.name}</span>
+      <span class="amount">${fmt(r.value)}</span>
     </div>
   `).join('') + `
-    <div class="divider"></div>
-    <div class="cost-row total">
-      <span class="label">${currentLang === 'zh' ? '每件总成本' : 'Total Cost/Unit'}</span>
-      <span class="value highlight">${fmt(totalCostPerUnit)}</span>
+    <div class="cost-item total">
+      <span class="name">${currentLang === 'zh' ? '每件总成本' : 'Total Cost/Unit'}</span>
+      <span class="amount">${fmt(totalUnitCost + platformFee + techFee + paymentFee + returnLoss)}</span>
     </div>
-    <div class="cost-row ${profitClass}">
-      <span class="label">${currentLang === 'zh' ? '每件净利润' : 'Net Profit/Unit'}</span>
-      <span class="value">${fmt(netProfit)}</span>
+    <div class="cost-item ${netPerUnit >= 0 ? 'profit' : 'loss'}">
+      <span class="name">${currentLang === 'zh' ? '每件净利润' : 'Net Profit/Unit'}</span>
+      <span class="amount">${fmt(netPerUnit)}</span>
     </div>
   `;
+  
+  document.getElementById('costBreakdown').innerHTML = html;
 }
 
-function renderPLSummary(revenue, netPerUnit, platformCosts, adCost, totalNet, qty) {
-  const grossProfit = revenue - parseFloat(document.getElementById('unitCost').value || 0);
-  const totalPlatform = platformCosts * qty;
-  const totalAd = adCost * qty;
-  const totalNetDisplay = totalNet;
-
-  document.getElementById('plRevenue').textContent = fmt(revenue * qty, 0);
-  document.getElementById('plGross').textContent = fmt(grossProfit * qty, 0);
-  document.getElementById('plGross').className = grossProfit >= 0 ? 'value' : 'value red';
-  document.getElementById('plPlatform').textContent = fmt(totalPlatform, 0);
-  document.getElementById('plAd').textContent = fmt(totalAd, 0);
-
-  const plNet = document.getElementById('plNet');
-  plNet.textContent = fmt(totalNetDisplay, 0);
-  plNet.className = totalNetDisplay >= 0 ? 'value' : 'value red';
-  document.getElementById('plNetRow').className = 'cost-row total' + (totalNetDisplay >= 0 ? ' profit' : ' loss');
-
-  document.getElementById('summarySubtitle').textContent = (currentLang === 'zh' ? '基于 ' : 'Based on ') + qty + (currentLang === 'zh' ? ' 件商品' : ' units');
-}
-
-function renderCouponWithScenarios(storeCoupon, platformCoupon, unitCost, packaging, shipping, platform, unitAdCost, qty, returnRate) {
+function renderCouponScenarios(unitCost, packaging, shipping, platform, unitAdCost, qty, returnRate) {
+  const storeCoupon = parseFloat(document.getElementById('storeCoupon').value) || 0;
+  const platformCoupon = parseFloat(document.getElementById('platformCoupon').value) || 0;
+  const sellPrice = parseFloat(document.getElementById('sellPrice').value) || 0;
+  
   const scenarios = [
-    { store: 0, platform: 0, cls: 'none' },
-    { store: storeCoupon, platform: 0, cls: 'small' },
-    { store: 0, platform: platformCoupon, cls: 'small' },
-    { store: storeCoupon, platform: platformCoupon, cls: storeCoupon + platformCoupon > 50 ? 'large' : 'medium' },
+    { discount: 0, label_zh: '无优惠', label_en: 'No Coupon', cls: 'none' },
+    { discount: storeCoupon, label_zh: '仅店铺券', label_en: 'Store Only', cls: 'small' },
+    { discount: platformCoupon, label_zh: '仅平台券', label_en: 'Platform Only', cls: 'small' },
+    { discount: storeCoupon + platformCoupon, label_zh: '双券叠加', label_en: 'Both', cls: storeCoupon + platformCoupon > 50 ? 'large' : 'small' },
   ];
-
-  scenarios.forEach(s => {
-    const eff = Math.max(0, parseFloat(document.getElementById('sellPrice').value || 0) - s.store - s.platform);
+  
+  const html = scenarios.map(s => {
+    const eff = Math.max(0, sellPrice - s.discount);
     const pf = eff * platform.fee;
     const tf = eff * platform.techFee;
     const ppf = eff * PAYMENT_FEE;
     const net = eff - pf - tf - ppf - unitCost - packaging - shipping - unitAdCost;
     const margin = eff > 0 ? (net / eff * 100) : 0;
-
-    const profitEl = document.getElementById('cp-' + s.cls);
-    const rateEl = document.getElementById('cp-rate-' + s.cls);
-    if (profitEl) {
-      profitEl.textContent = fmt(net);
-      profitEl.className = 'coupon-profit ' + (net >= 0 ? 'pos' : 'neg');
-    }
-    if (rateEl) {
-      rateEl.textContent = (currentLang === 'zh' ? '利润率 ' : 'Margin ') + fmtRate(margin);
-    }
-  });
+    const label = currentLang === 'zh' ? s.label_zh : s.label_en;
+    
+    return `
+      <div class="coupon-row">
+        <span class="badge ${s.cls}">${label}</span>
+        <div class="info">
+          <div class="profit ${net >= 0 ? 'pos' : 'neg'}">${fmt(net)}</div>
+          <div class="margin">${currentLang === 'zh' ? '利润率 ' : 'Margin '}${fmtRate(margin)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  document.getElementById('couponScenarios').innerHTML = html;
 }
 
-// ===== Pricing Advisor =====
+// 定价建议
 function calcAdvisedPrice() {
   const cost = parseFloat(document.getElementById('advCost').value) || 0;
   const targetMargin = parseFloat(document.getElementById('advMargin').value) || 30;
-
-  if (cost <= 0) return;
-
-  const platform = PLATFORMS[currentPlatform];
-  const divisor = 1 - platform.fee - platform.techFee - PAYMENT_FEE;
-  // Net = sellPrice * divisor - cost
-  // targetMargin = Net / sellPrice
-  // Net = sellPrice * targetMargin
-  // sellPrice * divisor - cost = sellPrice * targetMargin
-  // sellPrice * (divisor - targetMargin) = cost
-  const targetDivisor = divisor - (targetMargin / 100);
-  if (targetDivisor <= 0) {
-    document.getElementById('advisedPrice').textContent = currentLang === 'zh' ? '利润率过高' : 'Margin too high';
-    document.getElementById('advisedPrice').style.color = 'var(--danger)';
+  
+  if (cost <= 0) {
+    document.getElementById('advisedResult').classList.remove('show');
     return;
   }
+  
+  const platform = PLATFORMS[currentPlatform];
+  const divisor = 1 - platform.fee - platform.techFee - PAYMENT_FEE;
+  const targetDivisor = divisor - (targetMargin / 100);
+  
+  if (targetDivisor <= 0) {
+    document.getElementById('advisedPrice').textContent = currentLang === 'zh' ? '利润率过高' : 'Margin too high';
+    document.getElementById('advisedPrice').style.color = 'var(--red)';
+    document.getElementById('advisedResult').classList.add('show');
+    return;
+  }
+  
   const suggested = cost / targetDivisor;
-  document.getElementById('advisedPrice').style.color = 'var(--accent)';
   document.getElementById('advisedPrice').textContent = fmt(suggested);
-  document.getElementById('advisedMargin').textContent = `${currentLang === 'zh' ? '目标利润率 ' : 'Target margin '}${targetMargin}% · ${currentLang === 'zh' ? '平台 ' : 'Platform '}${platform.name}`;
+  document.getElementById('advisedPrice').style.color = 'var(--accent)';
+  document.getElementById('advisedResult').classList.add('show');
 }
 
-// ===== Utility =====
-function shakeCalcBtn() {
-  const btn = document.querySelector('.btn-calc');
-  btn.style.transform = 'translateX(-6px)';
-  setTimeout(() => btn.style.transform = 'translateX(6px)', 80);
-  setTimeout(() => btn.style.transform = 'translateX(-4px)', 160);
-  setTimeout(() => btn.style.transform = 'translateX(4px)', 240);
-  setTimeout(() => btn.style.transform = '', 320);
-}
-
-// Enter key triggers calc
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && e.target.tagName === 'INPUT') calculate();
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+  renderCouponScenarios(0, 0, 0, PLATFORMS.taobao, 0, 100, 5);
 });
-
-// Init
-renderCouponScenarios();
 </script>
 </body>
 </html>
