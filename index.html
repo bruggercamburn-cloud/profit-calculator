@@ -96,6 +96,8 @@ header {
   font-family: 'DM Sans', sans-serif;
 }
 .header-btn:hover { border-color: var(--accent); color: var(--accent); }
+.header-btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+.header-btn.primary:hover { background: #5558e3; }
 
 /* Main Layout */
 .main {
@@ -294,13 +296,6 @@ select:focus { border-color: var(--accent); }
   color: var(--text3);
   margin-top: 6px;
 }
-.hero-item .suggestion {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--accent);
-  margin-top: 4px;
-}
 
 /* Card */
 .card {
@@ -357,6 +352,34 @@ select:focus { border-color: var(--accent); }
 }
 .roi-item .value.good { color: var(--green); }
 .roi-item .value.bad { color: var(--red); }
+.roi-item .value.warn { color: var(--orange); }
+
+/* ROI Alert */
+.roi-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-top: 16px;
+  font-size: 13px;
+}
+.roi-alert.danger {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid rgba(239,68,68,0.2);
+}
+.roi-alert.success {
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid rgba(16,185,129,0.2);
+}
+.roi-alert .icon { font-size: 18px; }
+.roi-alert .text { flex: 1; }
+.roi-alert .highlight {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+}
 
 /* Break Even */
 .break-even {
@@ -449,6 +472,78 @@ select:focus { border-color: var(--accent); }
 .coupon-row .profit.neg { color: var(--red); }
 .coupon-row .margin { font-size: 11px; color: var(--text3); }
 
+/* AI Advisor */
+.ai-box {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.ai-input {
+  width: 100%;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  resize: none;
+  min-height: 60px;
+  transition: all 0.15s;
+}
+.ai-input:focus { border-color: var(--accent); }
+.ai-input::placeholder { color: var(--text3); }
+.ai-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+.ai-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99,102,241,0.3); }
+.ai-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.ai-response {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--card);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--text2);
+  max-height: 200px;
+  overflow-y: auto;
+}
+.ai-response .thinking { color: var(--text3); font-size: 11px; margin-bottom: 8px; }
+.ai-response .answer { color: var(--text); }
+.ai-response .error { color: var(--red); }
+.ai-thinking {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text3);
+  font-size: 12px;
+  padding: 10px;
+}
+.ai-thinking .dot { animation: bounce 1.4s infinite; }
+.ai-thinking .dot:nth-child(2) { animation-delay: 0.2s; }
+.ai-thinking .dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+
 /* Pricing Advisor */
 .advisor-box {
   display: grid;
@@ -501,6 +596,80 @@ select:focus { border-color: var(--accent); }
 .summary-item .label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
 .summary-item .value { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 600; }
 
+/* Import Section */
+.import-section {
+  margin-top: 16px;
+}
+.import-drop {
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.import-drop:hover, .import-drop.dragover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.import-drop .icon { font-size: 32px; margin-bottom: 8px; }
+.import-drop .text { font-size: 13px; color: var(--text2); }
+.import-drop .hint { font-size: 11px; color: var(--text3); margin-top: 4px; }
+.import-drop input { display: none; }
+
+.import-table {
+  margin-top: 16px;
+  overflow-x: auto;
+}
+.import-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.import-table th, .import-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.import-table th {
+  background: var(--input-bg);
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 10px;
+}
+.import-table td { color: var(--text); }
+.import-table td.positive { color: var(--green); font-weight: 600; }
+.import-table td.negative { color: var(--red); font-weight: 600; }
+.import-table tr:hover { background: var(--input-bg); }
+.import-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.import-actions button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.import-actions .calc-btn {
+  background: var(--accent);
+  border: none;
+  color: white;
+}
+.import-actions .calc-btn:hover { background: #5558e3; }
+.import-actions .clear-btn {
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  color: var(--text2);
+}
+.import-actions .clear-btn:hover { border-color: var(--red); color: var(--red); }
+
 /* Animation */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .hero-item, .card { animation: fadeIn 0.3s ease; }
@@ -532,10 +701,42 @@ select:focus { border-color: var(--accent); }
     Shop<span>Profit</span>
   </div>
   <div class="header-btns">
+    <button class="header-btn primary" onclick="showImport()" id="importBtn">📥 导入表格</button>
     <button class="header-btn" onclick="toggleTheme()" id="themeBtn">🌙 深色</button>
     <button class="header-btn" onclick="toggleLang()" id="langBtn">EN</button>
   </div>
 </header>
+
+<!-- Import Modal -->
+<div id="importModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+  <div style="background:var(--card);border-radius:14px;padding:24px;width:90%;max-width:900px;max-height:80vh;overflow:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <h3 style="font-family:'Outfit',sans-serif;font-size:18px;">📥 批量导入商品</h3>
+      <button onclick="closeImport()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);">✕</button>
+    </div>
+    <div class="import-drop" id="importDrop" onclick="document.getElementById('fileInput').click()">
+      <div class="icon">📊</div>
+      <div class="text" id="dropText">拖拽 CSV/Excel 文件到此处，或点击选择</div>
+      <div class="hint">支持 .csv, .xlsx 格式，需包含：商品名称、成本价、售价（可选：数量、推广费）</div>
+      <input type="file" id="fileInput" accept=".csv,.xlsx" onchange="handleFileSelect(event)">
+    </div>
+    <div id="importPreview" style="display:none;">
+      <div class="import-table" id="importTable"></div>
+      <div class="import-actions">
+        <button class="calc-btn" onclick="calculateAll()" id="calcAllBtn">📊 批量计算利润</button>
+        <button class="clear-btn" onclick="clearImport()">清空</button>
+      </div>
+    </div>
+    <div style="margin-top:16px;background:var(--input-bg);border-radius:8px;padding:14px;font-size:12px;color:var(--text2);">
+      <strong>📋 CSV 格式示例：</strong><br>
+      <code style="font-family:'JetBrains Mono',monospace;display:block;margin-top:8px;padding:8px;background:var(--card);border-radius:4px;">
+商品名称,成本价,售价,数量,推广费<br>
+卫衣A,25,99,100,500<br>
+裤子B,35,129,50,300
+      </code>
+    </div>
+  </div>
+</div>
 
 <div class="main">
   <!-- 左侧：输入面板 -->
@@ -746,6 +947,13 @@ select:focus { border-color: var(--accent); }
             <div class="value" id="adCostPercent">0%</div>
           </div>
         </div>
+        
+        <!-- ROI 不亏本提醒 -->
+        <div class="roi-alert" id="roiAlert" style="display:none;">
+          <span class="icon">⚠️</span>
+          <span class="text" id="roiAlertText"></span>
+        </div>
+        
         <div class="break-even">
           <div class="title" id="beTitle">💡 保本售价</div>
           <div class="price" id="breakEvenPrice">¥0.00</div>
@@ -780,6 +988,25 @@ select:focus { border-color: var(--accent); }
         <div class="coupon-list" id="couponScenarios">
           <!-- JS 填充 -->
         </div>
+      </div>
+    </div>
+
+    <!-- AI 定价建议 -->
+    <div class="card">
+      <div class="card-header">
+        <span class="icon">🤖</span>
+        <span id="aiTitle">AI 定价助手</span>
+        <span class="sub" id="aiSub">智能分析建议</span>
+      </div>
+      <div class="card-body">
+        <div class="ai-box">
+          <textarea class="ai-input" id="aiQuestion" placeholder="输入问题，例如：这款卫衣定价99元，利润率是否合理？有什么定价建议？"></textarea>
+          <button class="ai-btn" onclick="getAIAdvice()" id="aiBtn">
+            <span>✨</span>
+            <span id="aiBtnText">获取 AI 建议</span>
+          </button>
+        </div>
+        <div id="aiResponse"></div>
       </div>
     </div>
 
@@ -848,6 +1075,7 @@ select:focus { border-color: var(--accent); }
 // 状态
 let currentPlatform = 'taobao';
 let currentLang = 'zh';
+let importedProducts = [];
 
 const PLATFORMS = {
   taobao:      { name: '淘宝',       fee: 0.05, techFee: 0.005 },
@@ -878,6 +1106,7 @@ function toggleLang() {
   currentLang = currentLang === 'zh' ? 'en' : 'zh';
   document.getElementById('langBtn').textContent = currentLang === 'zh' ? 'EN' : '中';
   document.getElementById('themeBtn').textContent = currentLang === 'zh' ? '🌙 深色' : '🌙 Dark';
+  document.getElementById('importBtn').textContent = currentLang === 'zh' ? '📥 导入表格' : '📥 Import';
   
   const t = currentLang === 'zh' ? {
     inputTitle: '填写商品信息',
@@ -914,6 +1143,10 @@ function toggleLang() {
     costListTitle: '成本明细（每件）',
     costHint: '输入信息后自动计算',
     couponAnaTitle: '优惠券盈亏分析',
+    aiTitle: 'AI 定价助手',
+    aiSub: '智能分析建议',
+    aiBtnText: '获取 AI 建议',
+    aiPlaceholder: '输入问题，例如：这款卫衣定价99元，利润率是否合理？有什么定价建议？',
     advisorTitle: '定价建议',
     advisorSub: '按目标利润率反推售价',
     advCostLabel: '成本价 ¥',
@@ -931,6 +1164,9 @@ function toggleLang() {
     feeLabel: '平台抽成',
     techLabel: '技术服务费',
     payLabel: '支付费',
+    roiAlertOk: '✅ 不错！ROI 超过 <span class="highlight">{roi}</span>，广告投入有回报',
+    roiAlertWarn: '⚠️ ROI <span class="highlight">{roi}</span>，低于保本线 1.0x，每花 1 元广告只能赚 {net} 元',
+    roiAlertNoAd: '💡 没有设置推广费，ROI 无意义',
   } : {
     inputTitle: 'Enter Product Info',
     platformTitle: 'Select Platform',
@@ -966,6 +1202,10 @@ function toggleLang() {
     costListTitle: 'Cost Breakdown (per unit)',
     costHint: 'Enter values to calculate',
     couponAnaTitle: 'Coupon P&L Analysis',
+    aiTitle: 'AI Pricing Assistant',
+    aiSub: 'Smart analysis',
+    aiBtnText: 'Get AI Advice',
+    aiPlaceholder: 'Ask anything about pricing, e.g. Is 99 yuan profit margin reasonable?',
     advisorTitle: 'Pricing Advisor',
     advisorSub: 'Suggest price by target margin',
     advCostLabel: 'Cost ¥',
@@ -983,6 +1223,9 @@ function toggleLang() {
     feeLabel: 'Commission',
     techLabel: 'Tech Fee',
     payLabel: 'Payment Fee',
+    roiAlertOk: '✅ Good! ROI <span class="highlight">{roi}</span>, your ad spend is profitable',
+    roiAlertWarn: '⚠️ ROI <span class="highlight">{roi}</span>, below break-even 1.0x, each ¥1 spent earns {net}',
+    roiAlertNoAd: '💡 No ad spend set, ROI is N/A',
   };
   
   // 更新所有文本
@@ -994,16 +1237,13 @@ function toggleLang() {
   // 更新输入框占位符
   document.getElementById('unitCost').placeholder = t.placeholder_cost;
   document.getElementById('sellPrice').placeholder = t.placeholder_price;
+  document.getElementById('aiQuestion').placeholder = t.aiPlaceholder;
   
   // 更新平台名称
   const keys = Object.keys(PLATFORMS);
   keys.forEach(key => {
     const btn = document.getElementById('p-' + key);
-    if (btn) {
-      const span = btn.querySelector('.p-icon');
-      const text = btn.lastChild;
-      text.textContent = PLATFORMS[key].name;
-    }
+    if (btn) btn.lastChild.textContent = PLATFORMS[key].name;
   });
   
   // 更新类目选项
@@ -1056,13 +1296,13 @@ function calculate() {
   const platformCoupon = parseFloat(document.getElementById('platformCoupon').value) || 0;
   
   if (unitCost <= 0 || sellPrice <= 0) {
-    // 显示默认值
     document.getElementById('netProfitUnit').textContent = '¥0.00';
     document.getElementById('netProfitUnit').className = 'value neutral';
     document.getElementById('profitMargin').textContent = '0%';
     document.getElementById('profitMargin').className = 'value neutral';
     document.getElementById('totalProfit').textContent = '¥0';
     document.getElementById('totalProfit').className = 'value neutral';
+    document.getElementById('roiAlert').style.display = 'none';
     return;
   }
   
@@ -1122,10 +1362,13 @@ function calculate() {
   
   const roiEl = document.getElementById('roiRatio');
   roiEl.textContent = unitAdCost > 0 ? roi.toFixed(2) + 'x' : '—';
-  roiEl.className = 'value' + (roi >= 1 ? ' good' : roi > 0 ? '' : ' bad');
+  roiEl.className = 'value' + (roi >= 1 ? ' good' : roi > 0 ? ' warn' : unitAdCost > 0 ? ' bad' : '');
   
   document.getElementById('totalGMV').textContent = fmt(totalGMV, 0);
   document.getElementById('adCostPercent').textContent = fmtRate(adCostPercent);
+  
+  // ROI 不亏本提醒
+  updateROIAlert(roi, unitAdCost, netPerUnit);
   
   // 保本
   document.getElementById('breakEvenPrice').textContent = fmt(breakEvenPrice);
@@ -1147,6 +1390,37 @@ function calculate() {
   document.getElementById('plPlatform').textContent = fmt(totalPlatform, 0);
   document.getElementById('plNet').textContent = fmt(totalNet, 0);
   document.getElementById('plNet').className = 'value' + (totalNet >= 0 ? '' : ' bad');
+}
+
+// ROI 不亏本提醒
+function updateROIAlert(roi, unitAdCost, netPerUnit) {
+  const alertEl = document.getElementById('roiAlert');
+  const alertText = document.getElementById('roiAlertText');
+  
+  if (unitAdCost <= 0) {
+    alertEl.style.display = 'flex';
+    alertEl.className = 'roi-alert success';
+    alertText.innerHTML = currentLang === 'zh' 
+      ? '💡 没有设置推广费，ROI 无意义' 
+      : '💡 No ad spend set, ROI is N/A';
+    return;
+  }
+  
+  alertEl.style.display = 'flex';
+  
+  if (roi >= 1) {
+    alertEl.className = 'roi-alert success';
+    alertText.innerHTML = (currentLang === 'zh' 
+      ? '✅ 不错！ROI <span class="highlight">' + roi.toFixed(2) + 'x</span>，广告投入有回报<br><span style="font-size:11px;opacity:0.8">每花 1 元广告可赚 ' + netPerUnit.toFixed(2) + ' 元</span>'
+      : '✅ Good! ROI <span class="highlight">' + roi.toFixed(2) + 'x</span>, ad spend is profitable<br><span style="font-size:11px;opacity:0.8">Each ¥1 spent earns ¥' + netPerUnit.toFixed(2) + '</span>'
+    ).replace('{roi}', roi.toFixed(2)).replace('{net}', netPerUnit.toFixed(2));
+  } else {
+    alertEl.className = 'roi-alert danger';
+    alertText.innerHTML = (currentLang === 'zh' 
+      ? '⚠️ ROI <span class="highlight">' + roi.toFixed(2) + 'x</span>，低于保本线 1.0x<br><span style="font-size:11px;opacity:0.8">每花 1 元广告只能赚 ' + netPerUnit.toFixed(2) + ' 元，建议提高 ROI 到 1.0x 以上</span>'
+      : '⚠️ ROI <span class="highlight">' + roi.toFixed(2) + 'x</span>, below break-even 1.0x<br><span style="font-size:11px;opacity:0.8">Each ¥1 spent earns ¥' + netPerUnit.toFixed(2) + ', aim for ROI > 1.0x</span>'
+    ).replace('{roi}', roi.toFixed(2)).replace('{net}', netPerUnit.toFixed(2));
+  }
 }
 
 function renderCostBreakdown(platform, totalUnitCost, platformFee, techFee, paymentFee, unitAdCost, returnLoss, unitCost, packaging, shipping, effectivePrice, netPerUnit) {
@@ -1240,6 +1514,457 @@ function calcAdvisedPrice() {
   document.getElementById('advisedPrice').textContent = fmt(suggested);
   document.getElementById('advisedPrice').style.color = 'var(--accent)';
   document.getElementById('advisedResult').classList.add('show');
+}
+
+// AI 建议
+async function getAIAdvice() {
+  const question = document.getElementById('aiQuestion').value.trim();
+  if (!question) return;
+  
+  const btn = document.getElementById('aiBtn');
+  const responseEl = document.getElementById('aiResponse');
+  
+  btn.disabled = true;
+  document.getElementById('aiBtnText').textContent = currentLang === 'zh' ? '思考中...' : 'Thinking...';
+  responseEl.innerHTML = `
+    <div class="ai-thinking">
+      <span class="dot">●</span><span class="dot">●</span><span class="dot">●</span>
+      <span>${currentLang === 'zh' ? 'AI 正在分析...' : 'AI is analyzing...'}</span>
+    </div>
+  `;
+  
+  // 获取当前计算数据
+  const data = {
+    platform: PLATFORMS[currentPlatform].name,
+    unitCost: parseFloat(document.getElementById('unitCost').value) || 0,
+    sellPrice: parseFloat(document.getElementById('sellPrice').value) || 0,
+    qty: parseInt(document.getElementById('quantity').value) || 100,
+    adSpend: parseFloat(document.getElementById('adSpend').value) || 0,
+    packaging: parseFloat(document.getElementById('packaging').value) || 0,
+    shipping: parseFloat(document.getElementById('shipping').value) || 0,
+    question: question
+  };
+  
+  try {
+    // 本地智能分析（不需要 API）
+    const advice = generateLocalAdvice(data);
+    responseEl.innerHTML = `<div class="ai-response"><div class="answer">${advice}</div></div>`;
+  } catch (e) {
+    responseEl.innerHTML = `<div class="ai-response"><div class="error">Error: ${e.message}</div></div>`;
+  }
+  
+  btn.disabled = false;
+  document.getElementById('aiBtnText').textContent = currentLang === 'zh' ? '获取 AI 建议' : 'Get AI Advice';
+}
+
+// 本地智能建议（无需 API）
+function generateLocalAdvice(data) {
+  const platform = data.platform;
+  const cost = data.unitCost;
+  const price = data.sellPrice;
+  const question = data.question.toLowerCase();
+  
+  // 计算基础数据
+  const platformFee = price * (PLATFORMS[currentPlatform]?.fee || 0.05);
+  const techFee = price * (PLATFORMS[currentPlatform]?.techFee || 0.005);
+  const paymentFee = price * 0.006;
+  const totalCost = platformFee + techFee + paymentFee;
+  const netProfit = price - cost - totalCost;
+  const margin = price > 0 ? (netProfit / price * 100) : 0;
+  const adCostPerOrder = data.adSpend > 0 && data.qty > 0 ? data.adSpend / data.qty : 0;
+  const roi = adCostPerOrder > 0 && netProfit > 0 ? netProfit / adCostPerOrder : 0;
+  
+  const lang = currentLang === 'zh';
+  
+  // 分析问题类型
+  if (question.includes('合理') || question.includes('合适') || question.includes('normal') || question.includes('good')) {
+    if (margin >= 30) {
+      return lang 
+        ? `📊 **定价分析结果**
+
+**利润率：${margin.toFixed(1)}%** ✅ 优秀
+
+您的定价非常合理！${margin >= 50 ? '利润率超过50%，属于高利润商品' : '利润率在合理区间'}
+
+**建议：**
+• 当前定价可以保持
+• 可以考虑适当提高价格增加利润
+• ${platform}平台的综合费率约${(totalCost/price*100).toFixed(1)}%，在合理范围内`
+        : `📊 **Pricing Analysis**
+
+**Profit Margin: ${margin.toFixed(1)}%** ✅ Excellent
+
+Your pricing is very reasonable! ${margin >= 50 ? 'Profit margin exceeds 50%, high-profit product' : 'Margin is within reasonable range'}
+
+**Suggestions:**
+• Current pricing can be maintained
+• Consider raising price slightly to increase profit
+• ${platform} platform fees ~${(totalCost/price*100).toFixed(1)}%, within reasonable range`;
+    } else if (margin >= 15) {
+      return lang
+        ? `📊 **定价分析结果**
+
+**利润率：${margin.toFixed(1)}%** ⚠️ 一般
+
+利润率处于中等水平，还有优化空间。
+
+**建议：**
+• 可以尝试提高售价 ${((0.3 - margin/100) * price).toFixed(0)} 元，达到30%利润率
+• 或者降低采购成本
+• 关注 ${platform} 的推广 ROI，当前为 ${roi.toFixed(2)}x`
+        : `📊 **Pricing Analysis**
+
+**Profit Margin: ${margin.toFixed(1)}%** ⚠️ Average
+
+Margin is at medium level, room for optimization.
+
+**Suggestions:**
+• Try raising price by ¥${((0.3 - margin/100) * price).toFixed(0)} to reach 30% margin
+• Or reduce procurement cost
+• Monitor ${platform} ad ROI, currently ${roi.toFixed(2)}x`;
+    } else {
+      return lang
+        ? `📊 **定价分析结果**
+
+**利润率：${margin.toFixed(1)}%** ❌ 偏低
+
+⚠️ 当前利润率偏低，建议调整定价策略。
+
+**建议：**
+• 建议将售价提高到 ¥${(cost / 0.7).toFixed(0)} 以上，达到30%利润率
+• 或者寻找更低成本的供应商
+• 重新评估是否值得在 ${platform} 平台销售
+• 当前 ${platform} 综合费率约 ${(totalCost/price*100).toFixed(1)}%`
+        : `📊 **Pricing Analysis**
+
+**Profit Margin: ${margin.toFixed(1)}%** ❌ Low
+
+⚠️ Current margin is too low, consider adjusting strategy.
+
+**Suggestions:**
+• Raise price to ¥${(cost / 0.7).toFixed(0)}+ to achieve 30% margin
+• Find lower-cost suppliers
+• Re-evaluate if selling on ${platform} is worthwhile
+• ${platform} combined fees ~${(totalCost/price*100).toFixed(1)}%`;
+    }
+  }
+  
+  // ROI 相关
+  if (question.includes('roi') || question.includes('投产') || question.includes('广告')) {
+    if (adCostPerOrder <= 0) {
+      return lang
+        ? `📊 **ROI 分析**
+
+您尚未设置推广费用。
+
+**建议：**
+• 如果计划投放广告，建议先用小预算测试
+• 关注自然流量的转化率
+• ${platform} 平台广告 ROI 建议 > 1.0x 才能盈利`
+        : `📊 **ROI Analysis**
+
+No ad spend set yet.
+
+**Suggestions:**
+• If planning ads, start with small budget testing
+• Monitor natural traffic conversion rate
+• ${platform} ad ROI should be > 1.0x for profitability`;
+    } else if (roi >= 1) {
+      return lang
+        ? `📊 **ROI 分析**
+
+**当前 ROI：${roi.toFixed(2)}x** ✅ 盈利
+
+您的广告投入有正向回报！
+
+**分析：**
+• 每投入 ¥1 广告，可获得约 ¥${netProfit.toFixed(2)} 净利润
+• ROI > 1.0x 说明广告策略有效
+• ${platform} 平台广告平均 ROI 在 1.0-3.0x 之间
+
+**建议：**
+• 可以适当增加广告预算扩大规模
+• 持续优化广告投放策略
+• 关注转化率和客单价`
+        : `📊 **ROI Analysis**
+
+**Current ROI: ${roi.toFixed(2)}x** ✅ Profitable
+
+Your ad spend has positive returns!
+
+**Analysis:**
+• Every ¥1 spent earns ~¥${netProfit.toFixed(2)} net profit
+• ROI > 1.0x means ad strategy is effective
+• ${platform} avg ROI is 1.0-3.0x
+
+**Suggestions:**
+• Consider increasing ad budget to scale
+• Keep optimizing ad targeting
+• Monitor CVR and AOV`;
+    } else {
+      return lang
+        ? `📊 **ROI 分析**
+
+**当前 ROI：${roi.toFixed(2)}x** ⚠️ 亏损
+
+⚠️ ROI 低于保本线 1.0x，广告投入不划算！
+
+**问题诊断：**
+• 每投入 ¥1 广告，只能赚 ¥${netProfit.toFixed(2)}
+• 净利润 ${netProfit >= 0 ? '仍为正，但被广告费吃掉' : '已为负'}
+
+**优化建议：**
+1. 提高售价或降低商品成本，增加净利润空间
+2. 优化广告投放，降低 CPC（点击成本）
+3. 提高转化率，减少无效点击
+4. 考虑目标 ROI = 1.0x 时，最多能承受的广告费：¥${netProfit.toFixed(2)}/单`
+        : `📊 **ROI Analysis**
+
+**Current ROI: ${roi.toFixed(2)}x** ⚠️ Loss
+
+⚠️ ROI below break-even 1.0x, ad spend not profitable!
+
+**Diagnosis:**
+• Each ¥1 spent earns only ¥${netProfit.toFixed(2)}
+• Net profit ${netProfit >= 0 ? 'still positive but eaten by ad cost' : 'already negative'}
+
+**Optimization:**
+1. Raise price or lower cost to increase profit margin
+2. Optimize ad targeting, lower CPC
+3. Improve CVR to reduce wasted clicks
+4. For ROI = 1.0x, max affordable ad cost: ¥${netProfit.toFixed(2)}/order`;
+    }
+  }
+  
+  // 定价建议
+  if (question.includes('建议') || question.includes('定价') || question.includes('price') || question.includes('suggest')) {
+    const suggested30 = cost / (1 - PLATFORMS[currentPlatform].fee - PLATFORMS[currentPlatform].techFee - 0.006 - 0.30);
+    const suggested20 = cost / (1 - PLATFORMS[currentPlatform].fee - PLATFORMS[currentPlatform].techFee - 0.006 - 0.20);
+    
+    return lang
+      ? `📊 **定价建议**
+
+基于您的成本 ¥${cost.toFixed(2)} 和 ${platform} 平台费率：
+
+| 目标利润率 | 建议售价 |
+|-----------|---------|
+| 20% | ¥${suggested20.toFixed(0)} |
+| 30% | ¥${suggested30.toFixed(0)} |
+
+**说明：**
+• 以上售价已扣除 ${platform} 平台佣金、技术服务费、支付手续费
+• 实际利润还会受包装、快递、退货率影响
+• 建议从 30% 利润率开始测试，根据市场反馈调整`
+      : `📊 **Pricing Suggestions**
+
+Based on your cost ¥${cost.toFixed(2)} and ${platform} fees:
+
+| Target Margin | Suggested Price |
+|---------------|-----------------|
+| 20% | ¥${suggested20.toFixed(0)} |
+| 30% | ¥${suggested30.toFixed(0)} |
+
+**Note:**
+• Prices already deduct ${platform} commission, tech fee, payment fee
+• Actual profit affected by packaging, shipping, returns
+• Start with 30% margin, adjust based on market feedback`;
+  }
+  
+  // 默认回复
+  return lang
+    ? `📊 **分析结果**
+
+**商品信息：**
+- 平台：${platform}
+- 成本价：¥${cost.toFixed(2)}
+- 售价：¥${price.toFixed(2)}
+- 利润率：${margin.toFixed(1)}%
+
+**${platform} 平台费用：**
+- 平台佣金：¥${platformFee.toFixed(2)}
+- 技术服务费：¥${techFee.toFixed(2)}
+- 支付手续费：¥${paymentFee.toFixed(2)}
+- 合计：¥${totalCost.toFixed(2)} (${(totalCost/price*100).toFixed(1)}%)
+
+${roi > 0 ? `**广告 ROI：** ${roi.toFixed(2)}x（每投1元赚${netProfit.toFixed(2)}元）` : '**广告：** 未设置'}
+
+---
+💬 如果有具体问题，请继续提问，例如：
+- "这个利润率合理吗？"
+- "如何提高 ROI？"
+- "给我一些定价建议"`
+    : `📊 **Analysis Result**
+
+**Product Info:**
+- Platform: ${platform}
+- Cost: ¥${cost.toFixed(2)}
+- Price: ¥${price.toFixed(2)}
+- Margin: ${margin.toFixed(1)}%
+
+**${platform} Fees:**
+- Commission: ¥${platformFee.toFixed(2)}
+- Tech Fee: ¥${techFee.toFixed(2)}
+- Payment Fee: ¥${paymentFee.toFixed(2)}
+- Total: ¥${totalCost.toFixed(2)} (${(totalCost/price*100).toFixed(1)}%)
+
+${roi > 0 ? `**Ad ROI:** ${roi.toFixed(2)}x (¥${netProfit.toFixed(2)} profit per ¥1 spent)` : '**Ads:** Not configured'}
+
+---
+💬 Ask follow-up questions like:
+- "Is this margin reasonable?"
+- "How to improve ROI?"
+- "Give me pricing suggestions"`;
+}
+
+// 导入表格功能
+function showImport() {
+  document.getElementById('importModal').style.display = 'flex';
+}
+
+function closeImport() {
+  document.getElementById('importModal').style.display = 'none';
+}
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const content = e.target.result;
+    parseCSV(content);
+  };
+  reader.readAsText(file);
+}
+
+// 拖拽支持
+const importDrop = document.getElementById('importDrop');
+importDrop.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  importDrop.classList.add('dragover');
+});
+importDrop.addEventListener('dragleave', () => {
+  importDrop.classList.remove('dragover');
+});
+importDrop.addEventListener('drop', (e) => {
+  e.preventDefault();
+  importDrop.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      parseCSV(ev.target.result);
+    };
+    reader.readAsText(file);
+  }
+});
+
+function parseCSV(content) {
+  const lines = content.trim().split('\n');
+  if (lines.length < 2) {
+    alert(currentLang === 'zh' ? 'CSV 文件格式错误' : 'Invalid CSV format');
+    return;
+  }
+  
+  // 解析表头
+  const headers = lines[0].split(',').map(h => h.trim());
+  
+  // 解析数据
+  importedProducts = [];
+  for (let i = 1; i < lines.length; i++) {
+    const values = lines[i].split(',').map(v => v.trim());
+    if (values.length >= 2) {
+      importedProducts.push({
+        name: values[0] || `商品${i}`,
+        cost: parseFloat(values[1]) || 0,
+        price: parseFloat(values[2]) || 0,
+        qty: parseInt(values[3]) || 100,
+        adSpend: parseFloat(values[4]) || 0
+      });
+    }
+  }
+  
+  renderImportTable();
+}
+
+function renderImportTable() {
+  const table = document.getElementById('importTable');
+  const preview = document.getElementById('importPreview');
+  
+  if (importedProducts.length === 0) {
+    preview.style.display = 'none';
+    return;
+  }
+  
+  preview.style.display = 'block';
+  
+  const platform = PLATFORMS[currentPlatform];
+  const headers = currentLang === 'zh' 
+    ? ['商品名称', '成本价', '售价', '数量', '推广费', '净利润/件', '利润率', '总利润']
+    : ['Product', 'Cost', 'Price', 'Qty', 'Ad Spend', 'Net/Unit', 'Margin', 'Total'];
+  
+  let html = `<table><thead><tr>`;
+  headers.forEach(h => html += `<th>${h}</th>`);
+  html += `</tr></thead><tbody>`;
+  
+  importedProducts.forEach(p => {
+    const eff = Math.max(0, p.price);
+    const pf = eff * platform.fee;
+    const tf = eff * platform.techFee;
+    const ppf = eff * PAYMENT_FEE;
+    const unitAd = p.qty > 0 ? p.adSpend / p.qty : 0;
+    const net = eff - pf - tf - ppf - p.cost - unitAd;
+    const margin = eff > 0 ? (net / eff * 100) : 0;
+    const total = net * p.qty;
+    
+    p.calculated = { net, margin, total };
+    
+    html += `<tr>
+      <td>${p.name}</td>
+      <td>¥${p.cost.toFixed(2)}</td>
+      <td>¥${p.price.toFixed(2)}</td>
+      <td>${p.qty}</td>
+      <td>¥${p.adSpend.toFixed(0)}</td>
+      <td class="${net >= 0 ? 'positive' : 'negative'}">¥${net.toFixed(2)}</td>
+      <td class="${margin >= 20 ? 'positive' : margin >= 0 ? '' : 'negative'}">${margin.toFixed(1)}%</td>
+      <td class="${total >= 0 ? 'positive' : 'negative'}">¥${total.toFixed(0)}</td>
+    </tr>`;
+  });
+  
+  html += `</tbody></table>`;
+  table.innerHTML = html;
+}
+
+function calculateAll() {
+  const platform = PLATFORMS[currentPlatform];
+  importedProducts.forEach(p => {
+    const eff = Math.max(0, p.price);
+    const pf = eff * platform.fee;
+    const tf = eff * platform.techFee;
+    const ppf = eff * PAYMENT_FEE;
+    const unitAd = p.qty > 0 ? p.adSpend / p.qty : 0;
+    const net = eff - pf - tf - ppf - p.cost - unitAd;
+    const margin = eff > 0 ? (net / eff * 100) : 0;
+    const total = net * p.qty;
+    
+    p.calculated = { net, margin, total };
+  });
+  
+  renderImportTable();
+  
+  // 汇总
+  const totalProfit = importedProducts.reduce((sum, p) => sum + (p.calculated?.total || 0), 0);
+  const profitableCount = importedProducts.filter(p => (p.calculated?.total || 0) > 0).length;
+  
+  alert(currentLang === 'zh' 
+    ? `✅ 批量计算完成！\n盈利商品：${profitableCount}/${importedProducts.length} 件\n总净利润：¥${totalProfit.toFixed(0)}`
+    : `✅ Batch calculation complete!\nProfitable: ${profitableCount}/${importedProducts.length}\nTotal Net Profit: ¥${totalProfit.toFixed(0)}`);
+}
+
+function clearImport() {
+  importedProducts = [];
+  document.getElementById('importPreview').style.display = 'none';
+  document.getElementById('fileInput').value = '';
 }
 
 // 初始化
